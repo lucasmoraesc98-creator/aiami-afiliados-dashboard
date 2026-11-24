@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIAMI — Afiliados TikTok Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#111;--bg:#f7f5f5;--red:#ff0a33;--mut:#6b6b6b;--line:#e6e2e2}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Montserrat,system-ui,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:22px;margin:0 0 2px;font-weight:800}.sub{color:var(--mut);font-size:13px;margin-bottom:20px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.k{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+.k b{display:block;font-size:30px;font-weight:800;line-height:1}.k b small{font-size:11px;font-weight:600;color:var(--mut)}.k span{font-size:12px;color:var(--mut)}
+.k.hl b{color:var(--red)}
+.bar{margin:16px 0 4px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+.track{height:10px;background:#eee;border-radius:99px;overflow:hidden;margin-top:8px}.fill{height:100%;background:var(--red)}
+h2{font-size:15px;margin:26px 0 10px;font-weight:700}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}th{font-size:11px;text-transform:uppercase;color:var(--mut);letter-spacing:.04em}
+tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.c{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:flex-start}
+.av{flex:none;width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:700;font-size:16px}
+.uh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.c .u{font-weight:700;word-break:break-all}.open{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:600;line-height:1;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:#fff;padding:4px 8px;border-radius:99px;transition:.15s}.open:hover{color:#fff;background:var(--red);border-color:var(--red)}.open svg{flex:none}
+.tag{display:inline-block;font-size:11px;padding:3px 8px;border-radius:99px;margin-top:6px;font-weight:600}
+.t-ok{background:#e3f6e8;color:#14692c}.t-no{background:#eee;color:#555}.t-wait{background:#fff3cd;color:#7a5b00}
+.meta{font-size:12px;color:var(--mut);margin-top:4px;line-height:1.4}
+.gh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin:22px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--ink)}.gh b{font-size:14px;font-weight:800}.gh span{font-size:12px;color:var(--mut)}.gmv{font-size:12px;font-weight:700;margin-top:4px}.gmv small{font-weight:600;color:var(--mut)}.empty{font-size:12px;color:var(--mut);padding:10px 2px}
+.foot{font-size:11px;color:var(--mut);margin-top:22px}
+.msg{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:4px}
+.msg textarea{width:100%;min-height:360px;border:1px solid var(--line);border-radius:10px;padding:12px;font:13px/1.5 Montserrat,system-ui,sans-serif;resize:vertical;color:var(--ink)}
+.msg input[type=text]{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:13px Montserrat,system-ui,sans-serif}
+.msg label{display:block;font-size:12px;font-weight:600;margin:12px 0 6px}
+.chk{display:flex;gap:8px;align-items:center;font-size:13px;font-weight:600;margin:8px 0}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn{font:700 13px Montserrat,system-ui,sans-serif;border-radius:99px;padding:10px 18px;border:1px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer}
+.btn.pri{background:var(--red);border-color:var(--red);color:#fff}.btn:disabled{opacity:.4;cursor:not-allowed}
+.note{font-size:11.5px;color:var(--mut);margin-top:10px;line-height:1.5}.ok{font-size:12px;color:#14692c;font-weight:600;margin-left:6px}
+@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
+</style></head><body><div class="wrap">
+<h1>AIAMI · Afiliados TikTok Shop</h1>
+<div class="sub" id="upd"></div>
+<div class="kpis" id="kpis"></div>
+<div class="bar"><div style="display:flex;justify-content:space-between;font-size:12px"><span><b id="pn"></b> de <span id="meta"></span> aceites (meta para pausar novos convites)</span><span id="pp"></span></div><div class="track"><div class="fill" id="pf"></div></div></div>
+<h2>Convites por leva</h2>
+<table><thead><tr><th>Convite</th><th>Data</th><th>Comissão</th><th class="n">Enviados</th><th class="n">Aceitos</th></tr></thead><tbody id="tb"></tbody></table>
+<h2>Quem aceitou</h2>
+<div class="sub" style="margin:-4px 0 10px">Aceite = pediu amostra pelo convite ou adicionou produto à vitrine. Separados por leva de convite; dentro de cada leva, do maior para o menor GMV. GMV = “volume de vendas” do creator no Seller Center (período não informado pela tela), posição de 24/11.</div>
+<div class="cards" id="cards"></div>
+<div class="bar" id="fora" style="margin-top:16px;font-size:12px"></div>
+<h2>Mensagem para quem aceitou (amostra enviada)</h2>
+<div class="msg">
+<div class="sub" style="margin:0 0 8px">Rascunho editável. <b>[NOME]</b> vira o @ de cada creator e <b>[LINK DO VÍDEO REFERÊNCIA]</b> vira o link abaixo. Previsto para envio na segunda, 23/11, só depois do OK.</div>
+<textarea id="msgtxt"></textarea>
+<label for="vidlink">Link do vídeo de referência</label>
+<input type="text" id="vidlink" placeholder="Cole aqui o link do vídeo (ainda não definido)">
+<div class="chk"><input type="checkbox" id="ck1"><label for="ck1" style="margin:0">Link do vídeo de referência definido</label></div>
+<div class="chk"><input type="checkbox" id="ck2"><label for="ck2" style="margin:0">Do's &amp; don'ts confirmados com a equipe da AIAMI</label></div>
+<div class="sub" id="rcpt" style="margin:10px 0 0"></div>
+<div class="btns"><button class="btn" id="bcopy">Copiar mensagem</button><button class="btn pri" id="bsend" disabled>Copiar mensagem + lista de envio</button><span class="ok" id="okm"></span></div>
+<div class="note">Este painel <b>não envia</b> pelo TikTok: ele prepara a mensagem e a lista de destinatárias. O botão vermelho só libera com o link preenchido e as duas confirmações marcadas. O envio em lote é feito no Seller Center pelo Claude, depois do seu OK final.</div>
+</div>
+<div class="foot">* Convite inicial, anterior à regra de 12,5%. Clique no @ para abrir o perfil no TikTok. Dados do Seller Center (Central de afiliados). Para atualizar, peça ao Claude ou edite o bloco DADOS no início do script.</div>
+</div>
+<script>
+// ===== DADOS (edite aqui) =====
+const DADOS={
+ atualizado:"24/11/2026 17:42",
+ meta:30,
+ semLeva:2,
+ amostrasEnviadas:0,
+ videos:0,
+ foraConvites:{criadores:17,aguardandoRevisao:25,prontasEnvio:1},
+ convites:[
+  {"nome": "Inauguração AIAMI", "data": "03/11", "comissao": "13–15%*", "enviados": 17, "aceitos": 2},
+  {"nome": "AIAMI Primeiros Afiliados", "data": "11/11", "comissao": "12,5%", "enviados": 50, "aceitos": 1},
+  {"nome": "Leva2 – Inauguração AIAMI", "data": "12/11", "comissao": "12,5%", "enviados": 40, "aceitos": 1},
+  {"nome": "Leva3 – Inauguração AIAMI", "data": "18/11", "comissao": "12,5%", "enviados": 50, "aceitos": 11},
+  {"nome": "Leva4 – Inauguração AIAMI", "data": "18/11", "comissao": "12,5%", "enviados": 50, "aceitos": 12},
+  {"nome": "Leva5 – Inauguração AIAMI", "data": "18/11", "comissao": "12,5%", "enviados": 48, "aceitos": 6},
+  {"nome": "Homens 1 – Antifoliculite", "data": "24/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 50, "aceitos": 1},
+  {"nome": "Homens 2 – Antifoliculite", "data": "24/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 50, "aceitos": 0},
+  {"nome": "Homens 3 – Antifoliculite", "data": "24/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 42, "aceitos": 1}
+ ],
+ aceitaram:[
+  {"user": "sarahhhonorato", "convite": "Leva2", "prod": 3},
+  {"user": "esterecomenda", "convite": "A confirmar", "prod": 4},
+  {"user": "daniellesousa632", "convite": "A confirmar", "prod": 3},
+  {"user": "ladytada", "convite": "Leva5", "prod": 4},
+  {"user": "thatypaglioni", "convite": "Leva3", "prod": 3},
+  {"user": "mari_pinheiro_lemos", "convite": "Primeiros", "prod": 1},
+  {"user": "luanavargasf", "convite": "Leva4", "prod": 4},
+  {"user": "acasadagisa", "convite": "Leva3", "prod": 4},
+  {"user": "alexiaaugustyn2", "convite": "Leva3", "prod": 4},
+  {"user": "anaaaninha_", "convite": "Leva3", "prod": 1},
+  {"user": "bemditoeh", "convite": "Leva3", "prod": 4},
+  {"user": "dailyleandraa", "convite": "Leva3", "prod": 1},
+  {"user": "eugislaine9", "convite": "Leva3", "prod": 4},
+  {"user": "lethyindica_", "convite": "Leva3", "prod": 1},
+  {"user": "n0vember8th", "convite": "Leva3", "prod": 2},
+  {"user": "ondudanny", "convite": "Leva3", "prod": 4},
+  {"user": "santaloshop", "convite": "Leva3", "prod": 1},
+  {"user": "__dudafernandess", "convite": "Leva4", "prod": 4},
+  {"user": "brenysilva1", "convite": "Leva4", "prod": 1},
+  {"user": "bruna.charme.shop", "convite": "Leva4", "prod": 3},
+  {"user": "caroline.figueire58", "convite": "Leva4", "prod": 4},
+  {"user": "danubiavenancio", "convite": "Leva4", "prod": 4},
+  {"user": "jucamils", "convite": "Leva4", "prod": 3},
+  {"user": "kat.liry", "convite": "Leva4", "prod": 1},
+  {"user": "milenasantosfh", "convite": "Leva4", "prod": 4},
+  {"user": "nandaaasts", "convite": "Leva4", "prod": 4},
+  {"user": "rosielyferraz_", "convite": "Leva4", "prod": 4},
+  {"user": "thaizarayanne1", "convite": "Leva4", "prod": 4},
+  {"user": "dayane.ramos92", "convite": "Leva5", "prod": 3},
+  {"user": "gamazutticreator", "convite": "Leva5", "prod": 1},
+  {"user": "iaracore", "convite": "Leva5", "prod": 4},
+  {"user": "nathysouza068", "convite": "Leva5", "prod": 4},
+  {"user": "renatamello261", "convite": "Leva5", "prod": 1},
+  {"user": "thiago_tiktokshop", "convite": "Homens 1", "prod": 1},
+  {"user": "wesleyexpert", "convite": "Homens 3", "prod": 1},
+  {"user": "brunasssmaranhao", "convite": "Inauguração AIAMI", "prod": 0},
+  {"user": "debora_dascalakis", "convite": "Inauguração AIAMI", "prod": 0}
+ ]
+};
+// ===== fim dos dados =====
+const D=DADOS,$=id=>document.getElementById(id);
+const env=D.convites.reduce((a,c)=>a+c.enviados,0),ac=D.convites.reduce((a,c)=>a+c.aceitos,0)+(D.semLeva||0);
+$('upd').textContent='Atualizado em '+D.atualizado+' · considera apenas o que aconteceu a partir de 03/11/2026';
+const prods=D.aceitaram.reduce((a,x)=>a+x.prod,0),pedidoras=D.aceitaram.filter(x=>x.prod>0).length;
+$('kpis').innerHTML=[['Convites enviados',env,''],['Aceites',ac,'hl'],['Amostras a enviar',prods+' <small>produtos · '+pedidoras+' creators</small>',''],['Amostras enviadas',D.amostrasEnviadas,''],['Vídeos postados',D.videos,'']].map(k=>`<div class="k ${k[2]}"><b>${k[1]}</b><span>${k[0]}</span></div>`).join('');
+$('pn').textContent=ac;$('meta').textContent=D.meta;$('pp').textContent=Math.round(ac/D.meta*100)+'%';$('pf').style.width=Math.min(100,ac/D.meta*100)+'%';
+$('tb').innerHTML=D.convites.concat(D.semLeva?[{nome:'Convite a confirmar (novas creators)',data:'—',comissao:'12,5%',enviados:'—',aceitos:D.semLeva}]:[]).map(c=>`<tr><td>${c.nome}</td><td>${c.data}</td><td>${c.comissao}</td><td class="n">${c.enviados}</td><td class="n"><b>${c.aceitos}</b></td></tr>`).join('')+`<tr><td><b>Total</b></td><td></td><td></td><td class="n"><b>${env}</b></td><td class="n"><b>${ac}</b></td></tr>`;
+const GMV={esterecomenda:8491.23,daniellesousa632:8846.94,ladytada:7886.45,thatypaglioni:12025.78,mari_pinheiro_lemos:279386.20,luanavargasf:15257.38,santaloshop:6067.62,gamazutticreator:7636.13,ondudanny:7906.13,rosielyferraz_:8057.77,thaizarayanne1:7775.50,'dayane.ramos92':12320.66,'bruna.charme.shop':8356.03,__dudafernandess:7501.38,eugislaine9:11120.90,bemditoeh:9519.39,dailyleandraa:6717.07,jucamils:10870.33,n0vember8th:8140.02,milenasantosfh:9341.43,anaaaninha_:24693.17,brenysilva1:7779.60,nathysouza068:10234.70,alexiaaugustyn2:7271.25,renatamello261:7007.76,iaracore:9254.47,nandaaasts:7895.38,danubiavenancio:7968.56,'caroline.figueire58':9625.84,'kat.liry':7326.13,acasadagisa:7460.14,lethyindica_:4364.90,sarahhhonorato:475508.37,thiago_tiktokshop:88790.59,wesleyexpert:108142.94};
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const GRUPOS=[['Inauguração AIAMI','Inauguração AIAMI · 03/11'],['Primeiros','AIAMI Primeiros Afiliados · 11/11'],['Leva2','Leva2 · 12/11'],['Leva3','Leva3 · 18/11'],['Leva4','Leva4 · 18/11'],['Leva5','Leva5 · 18/11'],['Homens 1','Homens 1 – Antifoliculite · 24/11'],['Homens 2','Homens 2 – Antifoliculite · 24/11'],['Homens 3','Homens 3 – Antifoliculite · 24/11'],['A confirmar','Convite a confirmar (novas creators)']];
+function card(p){const pend=p.prod>0,g=GMV[p.user];return `<div class="c"><div class="av">${p.user.replace(/^[_.]+/,'')[0].toUpperCase()}</div><div><div class="uh"><span class="u">@${p.user}</span><a class="open" href="https://tiktok.com/@${p.user}" target="_blank" rel="noopener" title="Abrir perfil no TikTok" aria-label="Abrir @${p.user} no TikTok"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2H2.8A.8.8 0 0 0 2 2.8v6.4c0 .44.36.8.8.8h6.4a.8.8 0 0 0 .8-.8V7.5M7 2h3v3M10 2 5.5 6.5"/></svg>Abrir no TikTok</a></div><div class="gmv">GMV: ${g!=null?brl(g):'<small>não disponível</small>'}</div><span class="tag ${pend?'t-wait':'t-no'}">${pend?'Amostra pendente · '+p.prod+(p.prod>1?' produtos':' produto'):'Aceitou · sem amostra solicitada'}</span></div></div>`}
+$('cards').className='';
+$('cards').innerHTML=GRUPOS.map(([k,t])=>{const l=D.aceitaram.filter(x=>x.convite===k).sort((a,b)=>(GMV[b.user]||0)-(GMV[a.user]||0));const s=l.reduce((a,x)=>a+(GMV[x.user]||0),0);return `<div class="gh"><b>${t}</b><span>${l.length} ${l.length===1?'aceite':'aceites'}${s?' · GMV somado '+brl(s):''}</span></div>`+(l.length?`<div class="cards">${l.map(card).join('')}</div>`:'<div class="empty">Nenhum aceite até agora.</div>')}).join('');
+$('fora').innerHTML=`<b>${D.foraConvites.criadores}</b> creators pediram amostra pela colaboração aberta, fora dos convites: ${D.foraConvites.aguardandoRevisao} aguardando revisão e ${D.foraConvites.prontasEnvio} pronta para envio.`;
+
+// ===== mensagem editável =====
+const MSG_PADRAO=`Oi, [NOME]! 💗 Aqui é da AIAMI Asian Beauty Care.
+
+Sua amostra já foi enviada! Assim que chegar, a gente adoraria ver seu vídeo no ar. Lembrando que a comissão é de 12,5% sobre as vendas pelo seu link na TikTok Shop.
+
+✅ O QUE FAZER
+• Prenda nos 3 primeiros segundos: mostre o produto ou diga o benefício logo de cara
+• Fale como se estivesse indicando para uma amiga, com naturalidade
+• Mostre a embalagem e o produto em uso (textura, aplicação)
+• Conte sua experiência real, do seu jeito
+• Adicione o produto na vitrine/link da TikTok Shop no vídeo
+
+🚫 O QUE EVITAR
+• Promessas milagrosas ("cura", "resultado garantido", "em 1 dia")
+• Afirmações médicas ou de tratamento de doenças
+• Comparar ou criticar outras marcas
+• Esconder a embalagem do produto
+
+🎬 Referência de vídeo: [LINK DO VÍDEO REFERÊNCIA]
+(só para inspirar o estilo, não precisa copiar!)
+
+Qualquer dúvida, é só chamar por aqui. Obrigada pela parceria! ✨`;
+const LS={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const mt=$('msgtxt'),vl=$('vidlink'),c1=$('ck1'),c2=$('ck2'),bs=$('bsend');
+mt.value=LS.g('aiami_msg')||MSG_PADRAO;vl.value=LS.g('aiami_vid')||'';c1.checked=LS.g('aiami_c1')==='1';c2.checked=LS.g('aiami_c2')==='1';
+const dest=D.aceitaram.filter(x=>x.prod>0).map(x=>x.user);
+$('rcpt').textContent=dest.length+' creators com amostra pendente receberiam esta mensagem.';
+function final(u){return mt.value.split('[NOME]').join('@'+u).split('[LINK DO VÍDEO REFERÊNCIA]').join(vl.value.trim())}
+function gate(){bs.disabled=!(vl.value.trim()&&c1.checked&&c2.checked)}
+function save(){LS.s('aiami_msg',mt.value);LS.s('aiami_vid',vl.value);LS.s('aiami_c1',c1.checked?'1':'0');LS.s('aiami_c2',c2.checked?'1':'0');gate()}
+[mt,vl,c1,c2].forEach(e=>e.addEventListener('input',save));[c1,c2].forEach(e=>e.addEventListener('change',save));gate();
+function copia(t){const ok=()=>{$('okm').textContent='Copiado!';setTimeout(()=>$('okm').textContent='',2500)};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,()=>{mt.select();document.execCommand('copy');ok()})}else{mt.select();document.execCommand('copy');ok()}}
+$('bcopy').onclick=()=>copia(mt.value.split('[LINK DO VÍDEO REFERÊNCIA]').join(vl.value.trim()||'[LINK DO VÍDEO REFERÊNCIA]'));
+bs.onclick=()=>copia('MENSAGEM (use @ de cada creator no lugar de [NOME]):\n\n'+final('[NOME]').split('@[NOME]').join('[NOME]')+'\n\nDESTINATÁRIAS ('+dest.length+'):\n'+dest.map(u=>'@'+u).join('\n'));
+</script></body></html>
