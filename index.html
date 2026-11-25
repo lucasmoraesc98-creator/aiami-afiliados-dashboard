@@ -231,9 +231,9 @@ Qualquer dúvida, é só chamar por aqui. Obrigada pela parceria! ✨`;
 
 const LS={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 // ===== SOLICITAÇÕES DE AMOSTRA (dados coletados da aba "Solicitações de amostra" do TikTok Shop) =====
-// Projeto começa no convite Inauguração AIAMI (03/11): Enviadas/Concluídas antigas (sem vínculo com os convites) ficam de fora
-const KEEP_EC=new Set(['lethyindica_','brunasssmaranhao','debora_dascalakis']);
-SOLD.SOL=SOLD.SOL.filter(a=>!(a[1]==='E'||a[1]==='C')||KEEP_EC.has(a[0]));
+// Projeto começa no convite Inauguração AIAMI (03/11). Fora do período/sem vínculo com os convites: todas as Canceladas/Expiradas/Rejeitadas, todas as Concluídas e Enviadas antigas
+const KEEP_E=new Set(['lethyindica_']);
+SOLD.SOL=SOLD.SOL.filter(a=>a[1]==='A'||a[1]==='P'||(a[1]==='E'&&KEEP_E.has(a[0])));
 const SOLR=SOLD.SOL.map(a=>({u:a[0],s:a[1],p:a[2],c:a[3],cm:a[4],t:a[5],g:a[6],ap:a[7]}));
 const NPN=SOLD.PN,CRD=SOLD.CR,ANTI=8;
 const ABR=['Kit Sérum Cílios + Antifrizz','Sérum Prohairin 8ml','Antifrizz 8ml','Gel Fixador Sobrancelhas','Sabonete Cílios','Sabonete Antiacne','Kit Brow Lamination + Sérum','Kit 2 Séruns + Gel','Antifoliculite 100ml','Creme Hidratante 180g','Kit 3x Antifrizz'];
@@ -246,7 +246,7 @@ const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 const cS=(s,l)=>(l||SOLR).filter(r=>r.s===s).length;
 // KPIs (desde 03/11)
 (function(){const nc=new Set(SOLR.map(r=>r.u)).size,pend=cS('A')+cS('P')+cS('E');
- const K=[['Solicitações',SOLR.length,'desde 03/11 · '+nc+' creators',''],['Pendentes',pend,cS('A')+' a decidir · '+cS('P')+' a enviar · '+cS('E')+' em trânsito','hl'],['Enviados',cS('E')+cS('C'),cS('E')+' em trânsito · '+cS('C')+' concluídas',''],['Concluídos',cS('C'),'status Concluída no TikTok',''],['Vídeos gravados',cS('C'),'pelas concluídas*',''],['Canceladas',cS('X'),'expiradas, rejeitadas e canceladas','']];
+ const K=[['Solicitações',SOLR.length,'desde 03/11 · '+nc+' creators',''],['Pendentes',pend,cS('A')+' a decidir · '+cS('P')+' a enviar · '+cS('E')+' em trânsito','hl'],['Enviados',cS('E')+cS('C'),cS('E')+' em trânsito · '+cS('C')+' concluídas',''],['Concluídos',cS('C'),'status Concluída no TikTok',''],['Vídeos gravados',cS('C'),'pelas concluídas*','']];
  $('kpi2').innerHTML=K.map(k=>`<div class="k ${k[3]}"><b>${k[1]}</b><span>${k[0]}</span><small>${k[2]}</small></div>`).join('');
  $('kpinote').innerHTML='Período: desde 03/11/2026, como está na aba “Solicitações de amostra” do TikTok. *[Não verificado] Pelo que descrevem fontes de terceiros, “Concluída” = o creator postou vídeo ou LIVE com a amostra; o TikTok não mostra a contagem de vídeos, então é no mínimo 1 por solicitação concluída.'})();
 function stChip(r){
