@@ -44,7 +44,7 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 <h2>Convites por leva</h2>
 <table><thead><tr><th>Convite</th><th>Data</th><th>Comissão</th><th class="n">Enviados</th><th class="n">Aceitos</th></tr></thead><tbody id="tb"></tbody></table>
 <h2>Quem aceitou</h2>
-<div class="sub" style="margin:-4px 0 10px">Aceite = pediu amostra pelo convite ou adicionou produto à vitrine. Separados por leva de convite; dentro de cada leva, do maior para o menor GMV. GMV = “volume de vendas” do creator no Seller Center (período não informado pela tela), posição de 24/11.</div>
+<div class="sub" style="margin:-4px 0 10px">Aceite = pediu amostra pelo convite ou adicionou produto à vitrine. Separados por leva de convite; dentro de cada leva, do maior para o menor GMV. GMV = “volume de vendas” do creator no Seller Center (período não informado pela tela), posição de 24–25/11.</div>
 <div class="cards" id="cards"></div>
 <div class="bar" id="fora" style="margin-top:16px;font-size:12px"></div>
 <h2>Mensagem para quem aceitou (amostra enviada)</h2>
@@ -64,7 +64,7 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 <script>
 // ===== DADOS (edite aqui) =====
 const DADOS={
- atualizado:"25/11/2026 11:40",
+ atualizado:"25/11/2026 14:25",
  meta:30,
  semLeva:3,
  amostrasEnviadas:0,
@@ -79,12 +79,12 @@ const DADOS={
   {"nome": "Leva5 – Inauguração AIAMI", "data": "18/11", "comissao": "12,5%", "enviados": 48, "aceitos": 6},
   {"nome": "Homens 1 – Antifoliculite", "data": "24/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 50, "aceitos": 1},
   {"nome": "Homens 2 – Antifoliculite", "data": "24/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 50, "aceitos": 0},
-  {"nome": "Homens 3 – Antifoliculite", "data": "24/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 42, "aceitos": 1},
+  {"nome": "Homens 3 – Antifoliculite", "data": "24/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 43, "aceitos": 1},
   {"nome": "Homens 4 – Antifoliculite", "data": "25/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 46, "aceitos": 0},
   {"nome": "Homens 5 – Antifoliculite", "data": "25/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 44, "aceitos": 0},
   {"nome": "Homens 6 – Antifoliculite", "data": "25/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 39, "aceitos": 0},
   {"nome": "Homens 7 – Antifoliculite", "data": "25/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 41, "aceitos": 0},
-  {"nome": "Homens 8 – Antifoliculite", "data": "25/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 4, "aceitos": 0},
+  {"nome": "Homens 8 – Antifoliculite", "data": "25/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 4, "aceitos": 1},
   {"nome": "Homens 9 – Antifoliculite", "data": "25/11", "comissao": "12,5% (15% c/ 3 vídeos em 7 dias)", "enviados": 30, "aceitos": 0}
  ],
  aceitaram:[
@@ -124,6 +124,7 @@ const DADOS={
   {"user": "renatamello261", "convite": "Leva5", "prod": 1},
   {"user": "thiago_tiktokshop", "convite": "Homens 1", "prod": 1},
   {"user": "wesleyexpert", "convite": "Homens 3", "prod": 1},
+  {"user": "lojaviral12", "convite": "Homens 8", "prod": 1},
   {"user": "brunasssmaranhao", "convite": "Inauguração AIAMI", "prod": 0},
   {"user": "debora_dascalakis", "convite": "Inauguração AIAMI", "prod": 0}
  ]
@@ -136,7 +137,7 @@ const prods=D.aceitaram.reduce((a,x)=>a+x.prod,0),pedidoras=D.aceitaram.filter(x
 $('kpis').innerHTML=[['Convites enviados',env,''],['Aceites',ac,'hl'],['Amostras a enviar',prods+' <small>produtos · '+pedidoras+' creators</small>',''],['Amostras enviadas',D.amostrasEnviadas,''],['Vídeos postados',D.videos,'']].map(k=>`<div class="k ${k[2]}"><b>${k[1]}</b><span>${k[0]}</span></div>`).join('');
 $('pn').textContent=ac;$('meta').textContent=D.meta;$('pp').textContent=Math.round(ac/D.meta*100)+'%';$('pf').style.width=Math.min(100,ac/D.meta*100)+'%';
 $('tb').innerHTML=D.convites.concat(D.semLeva?[{nome:'Convite a confirmar (novas creators)',data:'—',comissao:'12,5%',enviados:'—',aceitos:D.semLeva}]:[]).map(c=>`<tr><td>${c.nome}</td><td>${c.data}</td><td>${c.comissao}</td><td class="n">${c.enviados}</td><td class="n"><b>${c.aceitos}</b></td></tr>`).join('')+`<tr><td><b>Total</b></td><td></td><td></td><td class="n"><b>${env}</b></td><td class="n"><b>${ac}</b></td></tr>`;
-const GMV={esterecomenda:8573.21,vitrineisaa:7748.67,daniellesousa632:8846.94,ladytada:8009.99,thatypaglioni:12025.78,mari_pinheiro_lemos:279386.20,luanavargasf:15257.38,santaloshop:5845.95,gamazutticreator:7636.13,ondudanny:7906.13,rosielyferraz_:8057.77,thaizarayanne1:7775.50,'dayane.ramos92':12320.66,'bruna.charme.shop':8356.03,__dudafernandess:7341.35,eugislaine9:11120.90,bemditoeh:9519.39,dailyleandraa:6717.07,jucamils:11132.92,n0vember8th:8140.02,milenasantosfh:9341.43,anaaaninha_:24693.17,brenysilva1:7779.60,nathysouza068:10234.70,alexiaaugustyn2:7271.25,renatamello261:7007.76,iaracore:9254.47,nandaaasts:7895.38,danubiavenancio:7968.56,'caroline.figueire58':9625.84,'kat.liry':7326.13,acasadagisa:7460.14,lethyindica_:4364.90,sarahhhonorato:475508.37,thiago_tiktokshop:88790.59,wesleyexpert:108142.94};
+const GMV={esterecomenda:8573.21,vitrineisaa:7748.67,daniellesousa632:8846.94,ladytada:8009.99,thatypaglioni:12025.78,mari_pinheiro_lemos:279386.20,luanavargasf:15257.38,santaloshop:5845.95,gamazutticreator:7636.13,ondudanny:7906.13,rosielyferraz_:8057.77,thaizarayanne1:7775.50,'dayane.ramos92':12320.66,'bruna.charme.shop':8356.03,__dudafernandess:7341.35,eugislaine9:11120.90,bemditoeh:9519.39,dailyleandraa:6717.07,jucamils:11132.92,n0vember8th:8140.02,milenasantosfh:9341.43,anaaaninha_:24693.17,brenysilva1:7779.60,nathysouza068:10234.70,alexiaaugustyn2:7271.25,renatamello261:7007.76,iaracore:9254.47,nandaaasts:7895.38,danubiavenancio:7968.56,'caroline.figueire58':9625.84,'kat.liry':7326.13,acasadagisa:7460.14,lethyindica_:4364.90,sarahhhonorato:475508.37,thiago_tiktokshop:88790.59,wesleyexpert:108142.94,lojaviral12:154724.39};
 const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const GRUPOS=[['Inauguração AIAMI','Inauguração AIAMI · 03/11'],['Primeiros','AIAMI Primeiros Afiliados · 11/11'],['Leva2','Leva2 · 12/11'],['Leva3','Leva3 · 18/11'],['Leva4','Leva4 · 18/11'],['Leva5','Leva5 · 18/11'],['Homens 1','Homens 1 – Antifoliculite · 24/11'],['Homens 2','Homens 2 – Antifoliculite · 24/11'],['Homens 3','Homens 3 – Antifoliculite · 24/11'],['Homens 4','Homens 4 – Antifoliculite · 25/11'],['Homens 5','Homens 5 – Antifoliculite · 25/11'],['Homens 6','Homens 6 – Antifoliculite · 25/11'],['Homens 7','Homens 7 – Antifoliculite · 25/11'],['Homens 8','Homens 8 – Antifoliculite · 25/11'],['Homens 9','Homens 9 – Antifoliculite · 25/11'],['A confirmar','Convite a confirmar (novas creators)']];
 function card(p){const pend=p.prod>0,g=GMV[p.user];return `<div class="c"><div class="av">${p.user.replace(/^[_.]+/,'')[0].toUpperCase()}</div><div><div class="uh"><span class="u">@${p.user}</span><a class="open" href="https://tiktok.com/@${p.user}" target="_blank" rel="noopener" title="Abrir perfil no TikTok" aria-label="Abrir @${p.user} no TikTok"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2H2.8A.8.8 0 0 0 2 2.8v6.4c0 .44.36.8.8.8h6.4a.8.8 0 0 0 .8-.8V7.5M7 2h3v3M10 2 5.5 6.5"/></svg>Abrir no TikTok</a></div><div class="gmv">GMV: ${g!=null?brl(g):'<small>não disponível</small>'}</div><span class="tag ${pend?'t-wait':'t-no'}">${pend?'Amostra pendente · '+p.prod+(p.prod>1?' produtos':' produto'):'Aceitou · sem amostra solicitada'}</span></div></div>`}
