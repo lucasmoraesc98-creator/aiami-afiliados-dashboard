@@ -38,8 +38,8 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 10px;border-bottom:1px solid var(--line)}.tabs button{font:700 13px Montserrat,system-ui,sans-serif;background:none;border:0;border-bottom:3px solid transparent;padding:10px 12px;cursor:pointer;color:var(--mut)}.tabs button.on{color:var(--ink);border-bottom-color:var(--red)}
 .anti-box{background:#fff;border:2px solid var(--red);border-radius:14px;padding:14px;margin:6px 0 4px}
-.scs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:10px}
-.sc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}.sh{display:flex;gap:10px;align-items:flex-start;margin-bottom:6px}
+
+
 .kv{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11.5px;color:var(--mut);margin-top:6px}.kv b{color:var(--ink)}
 .bd{font-size:10px;font-weight:700;background:#f0eded;border-radius:99px;padding:3px 7px}
 .rq{border-top:1px solid var(--line);padding:8px 0 0;margin-top:8px}.rn{font-size:12.5px;font-weight:700;line-height:1.35}.rm{font-size:11.5px;color:var(--mut);margin-top:4px;line-height:1.6}
@@ -55,9 +55,9 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 .pills{display:flex;gap:6px;flex-wrap:wrap}.pills button{font:600 12px Montserrat,system-ui,sans-serif;border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 11px;cursor:pointer;color:var(--ink)}.pills button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .btn.sm{padding:7px 12px;font-size:12px}
 .sect{margin-top:6px}.sect>.gh{cursor:pointer;user-select:none}.sect>.gh b:before{content:"\25BE\00a0";color:var(--red)}.sect.shut>.gh b:before{content:"\25B8\00a0"}.sect.shut>.sbody{display:none}
-.sc>.sh{cursor:pointer;margin-bottom:0;position:relative;padding-right:22px}.sc>.sh:before{content:"\25B8";position:absolute;right:2px;top:2px;color:var(--mut);font-size:14px}.sc.open>.sh:before{content:"\25BE"}
-.sc .sum{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0 0;font-size:11.5px;color:var(--mut);align-items:center}.sc .sum .g{margin-left:auto;font-weight:700;color:var(--ink)}
-.sc:not(.open) .det{display:none}.sc.open{border-color:var(--ink)}.sc.hide,.sect.hide{display:none}
+
+
+
 .anti-box .ah{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
 .mp{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 16px}.mp h3{margin:0 0 2px;font-size:16px;font-weight:800}
 .mp textarea{width:100%;min-height:380px;border:1px solid var(--line);border-radius:10px;padding:12px;font:13px/1.5 Montserrat,system-ui,sans-serif;resize:vertical;color:var(--ink)}
@@ -67,6 +67,34 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 .mp .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .cnt{font-size:11px;color:var(--mut);text-align:right;margin-top:4px}
 @media(max-width:700px){.kpis6{grid-template-columns:repeat(2,1fr)}.scs{grid-template-columns:1fr}}
+
+:root{color-scheme:light}
+.scs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:12px;align-items:start}
+.cd{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.cd.open{grid-column:1/-1;border-color:var(--ink);box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.cd.hide,.sect.hide{display:none}
+.cd-h{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer}
+.cd-h .av{flex:none}.cd-id{flex:1;min-width:0}
+.cd-u{font-weight:800;font-size:14px;word-break:break-all;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.cd-n{font-size:12px;color:var(--mut);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cd-tg{flex:none;font:700 12px Montserrat,system-ui,sans-serif;border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:99px;padding:8px 13px;cursor:pointer;white-space:nowrap}
+.cd.open .cd-tg{background:var(--ink);color:#fff}.cd-tg .t2,.cd.open .cd-tg .t1{display:none}.cd.open .cd-tg .t2{display:inline}
+.cd-sum{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;padding:0 14px 12px;font-size:12px;color:var(--mut)}.cd-sum .g{margin-left:auto;color:var(--ink);font-weight:700}
+.cd-det{display:none;border-top:1px solid var(--line);padding:14px;background:#fff}.cd.open .cd-det{display:block}
+.cd-body{display:grid;grid-template-columns:minmax(220px,290px) 1fr;gap:18px}
+.cd-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start}
+.st{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff}.st.w2{grid-column:1/-1}
+.st span{display:block;font-size:10.5px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.03em}.st b{display:block;margin-top:2px;font-size:14px;font-weight:800}
+.cd-reqs{display:flex;flex-direction:column;gap:10px}
+.rq2{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.rq2.anti{border-color:#ffc2cc;background:#fff1f3}
+.rq2-top{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.rq2 h4{margin:0;font-size:13px;font-weight:800;line-height:1.35}
+.rq2 dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px 14px;margin:10px 0 0}
+.rq2 dt{font-size:10.5px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.03em}.rq2 dd{margin:2px 0 0;font-size:12.5px;font-weight:700}
+.cd-ft{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.cd-ft a{font:700 12px Montserrat,system-ui,sans-serif;color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:8px 13px;text-decoration:none;background:#fff}
+.mp textarea,.mp input[type=text],.mp select{background:#fff!important;color:#111!important}
+@media(max-width:700px){.cd-body{grid-template-columns:1fr}.cd-tg{padding:8px 10px}}
 @media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
 </style></head><body><div class="wrap">
 <h1>AIAMI · Afiliados TikTok Shop</h1>
@@ -94,7 +122,7 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 <script>
 // ===== DADOS (edite aqui) =====
 const DADOS={
- atualizado:"25/11/2026 15:20",
+ atualizado:"25/11/2026 15:40",
  meta:30,
  semLeva:3,
  amostrasEnviadas:0,
@@ -224,16 +252,17 @@ function stChip(r){
  return `<span class="ch ch-no">${esc(r.t||'Cancelada')}</span>`}
 function reqLine(r){
  const a=r.p===ANTI,pr=SOLD.PRECO[r.p],est=SOLD.EST[r.p];
- const meta=[`Comissão ${r.cm}`,est!=null?`Estoque ${est}`:'',pr?`Preço ${pr}`:'',`Canal: ${CANAL[r.c]}`,r.ap==='auto'?'Aprovação automática':(r.ap==='man'?'Aprovação manual':''),r.g].filter(Boolean).join(' · ');
- return `<div class="rq${a?' anti':''}"><div class="rn">${a?'<span class="star">★ LANÇAMENTO</span> ':''}${esc(NPN[r.p])}</div><div class="rm">${stChip(r)} <span>${esc(meta)}</span></div></div>`}
+ const dl=[['Comissão',r.cm],['Estoque',est!=null?est:''],['Preço',pr||''],['Canal',CANAL[r.c]],['Aprovação',r.ap==='auto'?'Automática':(r.ap==='man'?'Manual':'')],['Gerenciado por',(r.g||'').replace('Gerenciado por ','')]].filter(x=>x[1]!=='').map(x=>`<div><dt>${x[0]}</dt><dd>${esc(x[1])}</dd></div>`).join('');
+ return `<div class="rq2${a?' anti':''}"><div class="rq2-top">${a?'<span class="star">★ LANÇAMENTO</span>':''}${stChip(r)}</div><h4>${esc(NPN[r.p])}</h4><dl>${dl}</dl></div>`}
 function crBlock(u,rows,open){
  const c=CRD[u]||{},dm=(c.d||'').match(/^(.*?),\s*((?:Feminino|Masculino).*)$/),foll=dm?dm[1]:(c.d||''),demo=dm?dm[2]:'';
- const kv=[['Seguidores',foll],['Público',demo],['Cumprimento',c.cu],['Média de views',c.v],['Volume de vendas (GMV)',c.g],['Itens vendidos',c.i]].filter(x=>x[1]&&x[1]!=='').map(x=>`<span><b>${esc(x[1])}</b> ${x[0]}</span>`).join('');
- const badges=[c.nv,(c.f||'').includes('S')?'Criador Spotlight':'',(c.f||'').includes('N')?'Novo':''].filter(Boolean).map(b=>`<span class="bd">${b}</span>`).join('');
+ const v=x=>x==='-'?'—':x;
+ const stats=[['Seguidores',foll,''],['Cumprimento',v(c.cu||''),''],['Média de views',v(c.v||''),''],['Itens vendidos',v(c.i||''),''],['GMV (volume de vendas)',v(c.g||''),'w2'],['Público',demo,'w2']].filter(x=>x[1]!=='').map(x=>`<div class="st ${x[2]}"><span>${x[0]}</span><b>${esc(x[1])}</b></div>`).join('');
+ const badges=[c.nv,(c.f||'').includes('S')?'Spotlight':'',(c.f||'').includes('N')?'Novo':''].filter(Boolean).map(b=>`<span class="bd">${b}</span>`).join('');
  const cnt={};rows.forEach(r=>cnt[r.s]=(cnt[r.s]||0)+1);
  const sum=STORD.filter(s=>cnt[s]).map(s=>`<span class="ch ${s==='A'?'ch-w':(s==='X'?'ch-no':'ch-ok')}">${cnt[s]>1?cnt[s]+'× ':''}${STS[s]}</span>`).join('')+`<span>${rows.length} ${rows.length===1?'produto':'produtos'}</span>`+(c.g&&c.g!=='-'?`<span class="g">GMV ${esc(c.g)}</span>`:'');
  const hay=(u+' '+(c.n||'')+' '+(c.c||'')+' '+rows.map(r=>NPN[r.p]).join(' ')).toLowerCase();
- return `<div class="sc${open?' open':''}" data-h="${esc(hay)}"><div class="sh" tabindex="0" role="button" aria-expanded="${!!open}"><div class="av">${u.replace(/^[_.]+/,'')[0].toUpperCase()}</div><div style="min-width:0"><div class="uh"><span class="u">@${u}</span><a class="open" href="https://tiktok.com/@${u}" target="_blank" rel="noopener">Abrir no TikTok</a>${badges}</div><div class="meta">${esc([c.n,c.c].filter(Boolean).join(' · '))}</div></div></div><div class="sum">${sum}</div><div class="det"><div class="kv">${kv||'<span>Métricas não exibidas pelo TikTok nesta aba</span>'}</div>${rows.map(reqLine).join('')}</div></div>`}
+ return `<div class="cd${open?' open':''}" data-h="${esc(hay)}"><div class="cd-h" tabindex="0" role="button" aria-expanded="${!!open}"><div class="av">${u.replace(/^[_.]+/,'')[0].toUpperCase()}</div><div class="cd-id"><div class="cd-u">@${u}${badges}</div><div class="cd-n">${esc([c.n,c.c].filter(Boolean).join(' · '))}</div></div><button type="button" class="cd-tg"><span class="t1">Ver detalhes ▾</span><span class="t2">Recolher ▴</span></button></div><div class="cd-sum">${sum}</div><div class="cd-det"><div class="cd-body"><div class="cd-stats">${stats||'<div class="st w2"><span>Métricas</span><b>Não exibidas pelo TikTok nesta aba</b></div>'}</div><div class="cd-reqs">${rows.map(reqLine).join('')}</div></div><div class="cd-ft"><a href="https://tiktok.com/@${u}" target="_blank" rel="noopener">Abrir @${u} no TikTok ↗</a><button type="button" class="cd-tg cd-close">Recolher ▴</button></div></div></div>`}
 function groupBy(list){const m={};list.forEach(r=>{(m[r.u]=m[r.u]||[]).push(r)});return m}
 function section(st,list,note){
  const g=groupBy(list),us=Object.keys(g).sort((a,b)=>num((CRD[b]||{}).g)-num((CRD[a]||{}).g));
@@ -312,17 +341,17 @@ function visiblePane(){return $('pane-'+cur)}
 function renderPills(){const l=cur==='sol'?conv:org;$('pills').innerHTML=[['all','Todas',l.length]].concat(STORD.map(s=>[s,STS[s].replace('/expirada',''),cS(s,l)]).filter(x=>x[2])).map(x=>`<button data-s="${x[0]}" class="${stf===x[0]?'on':''}">${x[1]} (${x[2]})</button>`).join('');
  [...document.querySelectorAll('#pills button')].forEach(b=>b.onclick=()=>{stf=b.dataset.s;renderPills();applyFilter()})}
 function applyFilter(){if(cur!=='sol'&&cur!=='org')return;const q=$('q').value.trim().toLowerCase();let vis=0,tot=0;
- visiblePane().querySelectorAll('.sect').forEach(sec=>{const stOk=stf==='all'||sec.dataset.st===stf;let n=0;sec.querySelectorAll('.sc').forEach(c=>{const ok=stOk&&(!q||c.dataset.h.includes(q));c.classList.toggle('hide',!ok);if(ok)n++;tot++});sec.classList.toggle('hide',n===0);if(n){vis+=n;if(q)sec.classList.remove('shut')}});
+ visiblePane().querySelectorAll('.sect').forEach(sec=>{const stOk=stf==='all'||sec.dataset.st===stf;let n=0;sec.querySelectorAll('.cd').forEach(c=>{const ok=stOk&&(!q||c.dataset.h.includes(q));c.classList.toggle('hide',!ok);if(ok)n++;tot++});sec.classList.toggle('hide',n===0);if(n){vis+=n;if(q)sec.classList.remove('shut')}});
  $('shown').textContent=(q||stf!=='all')?`Mostrando ${vis} de ${tot} creators nesta aba.`:`${tot} creators nesta aba. Clique no card para ver os detalhes.`}
 function showTab(k){cur=k;TABS.forEach(([id])=>{$('pane-'+id).style.display=id===k?'':'none'});[...document.querySelectorAll('#tabs button')].forEach(b=>b.classList.toggle('on',b.dataset.k===k));
  const lst=k==='sol'||k==='org';$('toolbar').style.display=lst?'':'none';if(lst){stf='all';renderPills();applyFilter()}try{history.replaceState(null,'','#'+k)}catch(e){}}
 $('tabs').innerHTML=TABS.map(([k,t])=>`<button data-k="${k}">${t}</button>`).join('');
 [...document.querySelectorAll('#tabs button')].forEach(b=>b.onclick=()=>{showTab(b.dataset.k);window.scrollTo({top:Math.max(0,$('navbar').offsetTop-4),behavior:'smooth'})});
 $('q').addEventListener('input',applyFilter);
-$('bexp').onclick=()=>visiblePane().querySelectorAll('.sc:not(.hide)').forEach(c=>{c.classList.add('open');c.querySelector('.sh').setAttribute('aria-expanded','true')});
-$('bcol').onclick=()=>visiblePane().querySelectorAll('.sc').forEach(c=>{c.classList.remove('open');c.querySelector('.sh').setAttribute('aria-expanded','false')});
-document.addEventListener('click',e=>{const h=e.target.closest('.sc>.sh');if(h&&!e.target.closest('a')){const c=h.parentElement;c.classList.toggle('open');h.setAttribute('aria-expanded',c.classList.contains('open'));return}
+$('bexp').onclick=()=>visiblePane().querySelectorAll('.cd:not(.hide)').forEach(c=>{c.classList.add('open');c.querySelector('.cd-h').setAttribute('aria-expanded','true')});
+$('bcol').onclick=()=>visiblePane().querySelectorAll('.cd').forEach(c=>{c.classList.remove('open');c.querySelector('.cd-h').setAttribute('aria-expanded','false')});
+document.addEventListener('click',e=>{const cl=e.target.closest('.cd-close');const h=cl?cl.closest('.cd').querySelector('.cd-h'):e.target.closest('.cd-h');if(h&&!(e.target.closest('a'))){const c=h.parentElement;c.classList.toggle('open');h.setAttribute('aria-expanded',c.classList.contains('open'));if(cl)c.scrollIntoView({block:'nearest',behavior:'smooth'});return}
  const g=e.target.closest('.sect>.gh');if(g)g.parentElement.classList.toggle('shut')});
-document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('sh')){e.preventDefault();e.target.click()}});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('cd-h')){e.preventDefault();e.target.click()}});
 showTab((location.hash||'').slice(1)&&TABS.some(t=>t[0]===location.hash.slice(1))?location.hash.slice(1):'sol');
 </script></body></html>
