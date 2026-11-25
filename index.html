@@ -45,15 +45,40 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 .rq{border-top:1px solid var(--line);padding:8px 0 0;margin-top:8px}.rn{font-size:12.5px;font-weight:700;line-height:1.35}.rm{font-size:11.5px;color:var(--mut);margin-top:4px;line-height:1.6}
 .rq.anti{background:#fff1f3;border:1px solid #ffc2cc;border-radius:10px;padding:8px}.star{color:var(--red);font-size:11px;font-weight:800}
 .ch{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-right:4px}.ch-ok{background:#e3f6e8;color:#14692c}.ch-w{background:#fff3cd;color:#7a5b00}.ch-no{background:#eee;color:#555}
+
+.kpis6{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:0}
+.kpis6 .k b{font-size:28px}.kpis6 .k small{display:block;font-size:10.5px;font-weight:600;color:var(--mut);margin-top:4px;line-height:1.35}
+.navbar{position:sticky;top:0;z-index:20;background:var(--bg);padding-top:6px;margin-top:18px;border-bottom:1px solid var(--line)}
+.navbar .tabs{margin:0;border-bottom:0;flex-wrap:nowrap;overflow-x:auto}.navbar .tabs button{white-space:nowrap}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 0 10px}
+.toolbar input[type=search]{flex:1 1 220px;min-width:180px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:13px Montserrat,system-ui,sans-serif;background:#fff}
+.pills{display:flex;gap:6px;flex-wrap:wrap}.pills button{font:600 12px Montserrat,system-ui,sans-serif;border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 11px;cursor:pointer;color:var(--ink)}.pills button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.sm{padding:7px 12px;font-size:12px}
+.sect{margin-top:6px}.sect>.gh{cursor:pointer;user-select:none}.sect>.gh b:before{content:"\25BE\00a0";color:var(--red)}.sect.shut>.gh b:before{content:"\25B8\00a0"}.sect.shut>.sbody{display:none}
+.sc>.sh{cursor:pointer;margin-bottom:0;position:relative;padding-right:22px}.sc>.sh:before{content:"\25B8";position:absolute;right:2px;top:2px;color:var(--mut);font-size:14px}.sc.open>.sh:before{content:"\25BE"}
+.sc .sum{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0 0;font-size:11.5px;color:var(--mut);align-items:center}.sc .sum .g{margin-left:auto;font-weight:700;color:var(--ink)}
+.sc:not(.open) .det{display:none}.sc.open{border-color:var(--ink)}.sc.hide,.sect.hide{display:none}
+.anti-box .ah{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.mp{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 16px}.mp h3{margin:0 0 2px;font-size:16px;font-weight:800}
+.mp textarea{width:100%;min-height:380px;border:1px solid var(--line);border-radius:10px;padding:12px;font:13px/1.5 Montserrat,system-ui,sans-serif;resize:vertical;color:var(--ink)}
+.mp input[type=text]{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:13px Montserrat,system-ui,sans-serif}
+.mp select{border:1px solid var(--line);border-radius:10px;padding:8px;font:13px Montserrat,system-ui,sans-serif;background:#fff}
+.mp label.l{display:block;font-size:12px;font-weight:600;margin:12px 0 6px}
+.mp .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cnt{font-size:11px;color:var(--mut);text-align:right;margin-top:4px}
+@media(max-width:700px){.kpis6{grid-template-columns:repeat(2,1fr)}.scs{grid-template-columns:1fr}}
 @media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
 </style></head><body><div class="wrap">
 <h1>AIAMI · Afiliados TikTok Shop</h1>
 <div class="sub" id="upd"></div>
-<div class="sub" id="totsol" style="margin:-8px 0 12px"></div>
+<div class="kpis6" id="kpi2"></div>
+<div class="sub" id="kpinote" style="margin:6px 0 14px"></div>
 <div id="antifol"></div>
-<div class="tabs" id="tabs"></div>
+<div class="navbar" id="navbar"><div class="tabs" id="tabs"></div>
+<div class="toolbar" id="toolbar"><input type="search" id="q" placeholder="Buscar creator, nome ou produto…" aria-label="Buscar"><div class="pills" id="pills"></div><div class="tb-btns"><button class="btn sm" id="bexp">Expandir tudo</button><button class="btn sm" id="bcol">Recolher tudo</button></div><div class="sub" id="shown" style="margin:0;width:100%"></div></div></div>
 <div id="pane-sol"></div>
 <div id="pane-org" style="display:none"></div>
+<div id="pane-msg" style="display:none"></div>
 <div id="pane-conv" style="display:none">
 <div class="kpis" id="kpis"></div>
 <div class="bar"><div style="display:flex;justify-content:space-between;font-size:12px"><span><b id="pn"></b> de <span id="meta"></span> aceites (meta para pausar novos convites)</span><span id="pp"></span></div><div class="track"><div class="fill" id="pf"></div></div></div>
@@ -63,25 +88,13 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 <div class="sub" style="margin:-4px 0 10px">Aceite = pediu amostra pelo convite ou adicionou produto à vitrine. Separados por leva de convite; dentro de cada leva, do maior para o menor GMV. GMV = “volume de vendas” do creator no Seller Center (período não informado pela tela), posição de 24–25/11.</div>
 <div class="cards" id="cards"></div>
 <div class="bar" id="fora" style="margin-top:16px;font-size:12px"></div>
-<h2>Mensagem para quem aceitou (amostra enviada)</h2>
-<div class="msg">
-<div class="sub" style="margin:0 0 8px">Rascunho editável. <b>[NOME]</b> vira o @ de cada creator e <b>[LINK DO VÍDEO REFERÊNCIA]</b> vira o link abaixo. Previsto para envio na segunda, 23/11, só depois do OK.</div>
-<textarea id="msgtxt"></textarea>
-<label for="vidlink">Link do vídeo de referência</label>
-<input type="text" id="vidlink" placeholder="Cole aqui o link do vídeo (ainda não definido)">
-<div class="chk"><input type="checkbox" id="ck1"><label for="ck1" style="margin:0">Link do vídeo de referência definido</label></div>
-<div class="chk"><input type="checkbox" id="ck2"><label for="ck2" style="margin:0">Do's &amp; don'ts confirmados com a equipe da AIAMI</label></div>
-<div class="sub" id="rcpt" style="margin:10px 0 0"></div>
-<div class="btns"><button class="btn" id="bcopy">Copiar mensagem</button><button class="btn pri" id="bsend" disabled>Copiar mensagem + lista de envio</button><span class="ok" id="okm"></span></div>
-<div class="note">Este painel <b>não envia</b> pelo TikTok: ele prepara a mensagem e a lista de destinatárias. O botão vermelho só libera com o link preenchido e as duas confirmações marcadas. O envio em lote é feito no Seller Center pelo Claude, depois do seu OK final.</div>
-</div>
 </div>
 <div class="foot">* Convite inicial, anterior à regra de 12,5%. Clique no @ para abrir o perfil no TikTok. Dados do Seller Center (Central de afiliados). Para atualizar, peça ao Claude ou edite o bloco DADOS no início do script.</div>
 </div>
 <script>
 // ===== DADOS (edite aqui) =====
 const DADOS={
- atualizado:"25/11/2026 14:55",
+ atualizado:"25/11/2026 15:20",
  meta:30,
  semLeva:3,
  amostrasEnviadas:0,
@@ -186,28 +199,23 @@ Sua amostra já foi enviada! Assim que chegar, a gente adoraria ver seu vídeo n
 (só para inspirar o estilo, não precisa copiar!)
 
 Qualquer dúvida, é só chamar por aqui. Obrigada pela parceria! ✨`;
-const LS={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
-const mt=$('msgtxt'),vl=$('vidlink'),c1=$('ck1'),c2=$('ck2'),bs=$('bsend');
-mt.value=LS.g('aiami_msg')||MSG_PADRAO;vl.value=LS.g('aiami_vid')||'';c1.checked=LS.g('aiami_c1')==='1';c2.checked=LS.g('aiami_c2')==='1';
-const dest=D.aceitaram.filter(x=>x.prod>0).map(x=>x.user);
-$('rcpt').textContent=dest.length+' creators com amostra pendente receberiam esta mensagem.';
-function final(u){return mt.value.split('[NOME]').join('@'+u).split('[LINK DO VÍDEO REFERÊNCIA]').join(vl.value.trim())}
-function gate(){bs.disabled=!(vl.value.trim()&&c1.checked&&c2.checked)}
-function save(){LS.s('aiami_msg',mt.value);LS.s('aiami_vid',vl.value);LS.s('aiami_c1',c1.checked?'1':'0');LS.s('aiami_c2',c2.checked?'1':'0');gate()}
-[mt,vl,c1,c2].forEach(e=>e.addEventListener('input',save));[c1,c2].forEach(e=>e.addEventListener('change',save));gate();
-function copia(t){const ok=()=>{$('okm').textContent='Copiado!';setTimeout(()=>$('okm').textContent='',2500)};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,()=>{mt.select();document.execCommand('copy');ok()})}else{mt.select();document.execCommand('copy');ok()}}
-$('bcopy').onclick=()=>copia(mt.value.split('[LINK DO VÍDEO REFERÊNCIA]').join(vl.value.trim()||'[LINK DO VÍDEO REFERÊNCIA]'));
-bs.onclick=()=>copia('MENSAGEM (use @ de cada creator no lugar de [NOME]):\n\n'+final('[NOME]').split('@[NOME]').join('[NOME]')+'\n\nDESTINATÁRIAS ('+dest.length+'):\n'+dest.map(u=>'@'+u).join('\n'));
 
+const LS={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 // ===== SOLICITAÇÕES DE AMOSTRA (dados coletados da aba "Solicitações de amostra" do TikTok Shop) =====
 const SOLR=SOLD.SOL.map(a=>({u:a[0],s:a[1],p:a[2],c:a[3],cm:a[4],t:a[5],g:a[6],ap:a[7]}));
-const NPN=SOLD.PN,CRD=SOLD.CR;
-const ANTI=8;
+const NPN=SOLD.PN,CRD=SOLD.CR,ANTI=8;
 const num=s=>{if(!s||s==='-')return 0;const m=s.replace(/[R$\s.]/g,'').replace(',','.');return parseFloat(m)||0};
 const ST={A:'A analisar',P:'Pronto para envio',E:'Enviadas',C:'Concluídas',X:'Canceladas, expiradas e rejeitadas'};
+const STS={A:'A analisar',P:'Pronto p/ envio',E:'Enviada',C:'Concluída',X:'Cancelada/expirada'};
 const STORD=['A','P','E','C','X'];
 const CANAL={d:'Convite (colaboração direcionada)',a:'Colaboração aberta',p:'Campanha de parceiro','?':'Canal não informado pela aba'};
 const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const cS=(s,l)=>(l||SOLR).filter(r=>r.s===s).length;
+// KPIs (desde 03/11)
+(function(){const nc=new Set(SOLR.map(r=>r.u)).size,pend=cS('A')+cS('P')+cS('E');
+ const K=[['Solicitações',SOLR.length,'desde 03/11 · '+nc+' creators',''],['Pendentes',pend,cS('A')+' a decidir · '+cS('P')+' a enviar · '+cS('E')+' em trânsito','hl'],['Enviados',cS('E')+cS('C'),cS('E')+' em trânsito · '+cS('C')+' concluídas',''],['Concluídos',cS('C'),'status Concluída no TikTok',''],['Vídeos gravados',cS('C'),'pelas concluídas*',''],['Canceladas',cS('X'),'expiradas, rejeitadas e canceladas','']];
+ $('kpi2').innerHTML=K.map(k=>`<div class="k ${k[3]}"><b>${k[1]}</b><span>${k[0]}</span><small>${k[2]}</small></div>`).join('');
+ $('kpinote').innerHTML='Período: desde 03/11/2026, como está na aba “Solicitações de amostra” do TikTok. *[Não verificado] Pelo que descrevem fontes de terceiros, “Concluída” = o creator postou vídeo ou LIVE com a amostra; o TikTok não mostra a contagem de vídeos, então é no mínimo 1 por solicitação concluída.'})();
 function stChip(r){
  if(r.s==='A')return `<span class="ch ch-w">A analisar${r.t?' · '+esc(r.t):''}</span>`;
  if(r.s==='P')return `<span class="ch ch-ok">Aprovada · pronta para envio</span>`;
@@ -218,30 +226,103 @@ function reqLine(r){
  const a=r.p===ANTI,pr=SOLD.PRECO[r.p],est=SOLD.EST[r.p];
  const meta=[`Comissão ${r.cm}`,est!=null?`Estoque ${est}`:'',pr?`Preço ${pr}`:'',`Canal: ${CANAL[r.c]}`,r.ap==='auto'?'Aprovação automática':(r.ap==='man'?'Aprovação manual':''),r.g].filter(Boolean).join(' · ');
  return `<div class="rq${a?' anti':''}"><div class="rn">${a?'<span class="star">★ LANÇAMENTO</span> ':''}${esc(NPN[r.p])}</div><div class="rm">${stChip(r)} <span>${esc(meta)}</span></div></div>`}
-function crBlock(u,rows){
+function crBlock(u,rows,open){
  const c=CRD[u]||{},dm=(c.d||'').match(/^(.*?),\s*((?:Feminino|Masculino).*)$/),foll=dm?dm[1]:(c.d||''),demo=dm?dm[2]:'';
  const kv=[['Seguidores',foll],['Público',demo],['Cumprimento',c.cu],['Média de views',c.v],['Volume de vendas (GMV)',c.g],['Itens vendidos',c.i]].filter(x=>x[1]&&x[1]!=='').map(x=>`<span><b>${esc(x[1])}</b> ${x[0]}</span>`).join('');
  const badges=[c.nv,(c.f||'').includes('S')?'Criador Spotlight':'',(c.f||'').includes('N')?'Novo':''].filter(Boolean).map(b=>`<span class="bd">${b}</span>`).join('');
- return `<div class="sc"><div class="sh"><div class="av">${u.replace(/^[_.]+/,'')[0].toUpperCase()}</div><div style="min-width:0"><div class="uh"><span class="u">@${u}</span><a class="open" href="https://tiktok.com/@${u}" target="_blank" rel="noopener">Abrir no TikTok</a>${badges}</div><div class="meta">${esc([c.n,c.c].filter(Boolean).join(' · '))}</div><div class="kv">${kv||'<span>Métricas não exibidas pelo TikTok nesta aba</span>'}</div></div></div>${rows.map(reqLine).join('')}</div>`}
+ const cnt={};rows.forEach(r=>cnt[r.s]=(cnt[r.s]||0)+1);
+ const sum=STORD.filter(s=>cnt[s]).map(s=>`<span class="ch ${s==='A'?'ch-w':(s==='X'?'ch-no':'ch-ok')}">${cnt[s]>1?cnt[s]+'× ':''}${STS[s]}</span>`).join('')+`<span>${rows.length} ${rows.length===1?'produto':'produtos'}</span>`+(c.g&&c.g!=='-'?`<span class="g">GMV ${esc(c.g)}</span>`:'');
+ const hay=(u+' '+(c.n||'')+' '+(c.c||'')+' '+rows.map(r=>NPN[r.p]).join(' ')).toLowerCase();
+ return `<div class="sc${open?' open':''}" data-h="${esc(hay)}"><div class="sh" tabindex="0" role="button" aria-expanded="${!!open}"><div class="av">${u.replace(/^[_.]+/,'')[0].toUpperCase()}</div><div style="min-width:0"><div class="uh"><span class="u">@${u}</span><a class="open" href="https://tiktok.com/@${u}" target="_blank" rel="noopener">Abrir no TikTok</a>${badges}</div><div class="meta">${esc([c.n,c.c].filter(Boolean).join(' · '))}</div></div></div><div class="sum">${sum}</div><div class="det"><div class="kv">${kv||'<span>Métricas não exibidas pelo TikTok nesta aba</span>'}</div>${rows.map(reqLine).join('')}</div></div>`}
 function groupBy(list){const m={};list.forEach(r=>{(m[r.u]=m[r.u]||[]).push(r)});return m}
-function section(title,list,note){
+function section(st,list,note){
  const g=groupBy(list),us=Object.keys(g).sort((a,b)=>num((CRD[b]||{}).g)-num((CRD[a]||{}).g));
- return `<div class="gh"><b>${title}</b><span>${list.length} ${list.length===1?'solicitação':'solicitações'} · ${us.length} ${us.length===1?'creator':'creators'}</span></div>${note?`<div class="sub" style="margin:-2px 0 8px">${note}</div>`:''}`+(us.length?`<div class="scs">${us.map(u=>crBlock(u,g[u])).join('')}</div>`:'<div class="empty">Nenhuma solicitação.</div>')}
-const antiRows=SOLR.filter(r=>r.p===ANTI);
-const restRows=SOLR.filter(r=>r.p!==ANTI);
+ return `<div class="sect" data-st="${st}"><div class="gh"><b>${ST[st]}</b><span>${list.length} ${list.length===1?'solicitação':'solicitações'} · ${us.length} ${us.length===1?'creator':'creators'}</span></div><div class="sbody">${note?`<div class="sub" style="margin:-2px 0 8px">${note}</div>`:''}<div class="scs">${us.map(u=>crBlock(u,g[u],false)).join('')}</div></div></div>`}
+const antiRows=SOLR.filter(r=>r.p===ANTI),restRows=SOLR.filter(r=>r.p!==ANTI);
 const conv=restRows.filter(r=>r.c==='d'||r.c==='?'),org=restRows.filter(r=>r.c==='a'||r.c==='p');
-const cntS=l=>STORD.map(s=>`${ST[s].split(',')[0]} ${l.filter(r=>r.s===s).length}`).join(' · ');
-const nA=antiRows.filter(r=>r.s==='A').length,nP=antiRows.filter(r=>r.s==='P').length;
-$('antifol').innerHTML=`<div class="anti-box"><div class="gh" style="margin-top:0;border-bottom-color:var(--red)"><b>★ Antifoliculite · lançamento</b><span>${antiRows.length} ${antiRows.length===1?'solicitação':'solicitações'} · ${nA} a analisar · ${nP} aprovadas, prontas para envio</span></div>`+
- STORD.map(s=>({s,l:antiRows.filter(r=>r.s===s)})).filter(x=>x.l.length).map(x=>`<div class="sub" style="margin:10px 0 6px"><b>${ST[x.s]}</b></div><div class="scs">${Object.entries(groupBy(x.l)).map(([u,rs])=>crBlock(u,rs)).join('')}</div>`).join('')+
- `<div class="sub" style="margin:10px 0 0">Todas as solicitações do Antifoliculite aparecem aqui, no topo, em qualquer status e canal, e não se repetem nas abas abaixo.</div></div>`;
-function pane(list,note){return `<div class="sub" style="margin:0 0 4px">${list.length} solicitações (sem contar o Antifoliculite) · ${cntS(list)}</div>${note||''}`+STORD.map(s=>{const l=list.filter(r=>r.s===s);return l.length?section(ST[s],l,s==='A'?'Aguardam sua decisão no TikTok (Aprovar ou Rejeitar). O prazo restante é o do TikTok.':''):''}).join('')}
-$('pane-sol').innerHTML=pane(conv,'<div class="sub" style="margin:0 0 6px">Solicitações vindas de convite. Em Enviadas e Concluídas o TikTok não mostra o canal; ali aparece “canal não informado”.</div>');
-$('pane-org').innerHTML=pane(org,'<div class="sub" style="margin:0 0 6px">Pedidos que não vieram de convite: colaboração aberta e campanha de parceiro (gerenciada por S4vvy).</div>');
-const TABS=[['sol','Solicitações · convites ('+conv.length+')'],['org','Pedido orgânico ('+org.length+')'],['conv','Convites por leva e aceites']];
-function showTab(k){TABS.forEach(([id])=>{$('pane-'+id).style.display=id===k?'':'none'});[...document.querySelectorAll('#tabs button')].forEach(b=>b.classList.toggle('on',b.dataset.k===k))}
+const nA=cS('A',antiRows),nP=cS('P',antiRows);
+$('antifol').innerHTML=`<div class="anti-box"><div class="ah"><div class="gh" style="margin:0;border:0;padding:0;flex:1"><b>★ Antifoliculite · lançamento</b><span>${antiRows.length} ${antiRows.length===1?'solicitação':'solicitações'} · ${nA} a analisar · ${nP} aprovadas, prontas para envio</span></div><button class="btn sm" id="aftog">Recolher</button></div><div id="afbody">`+
+ STORD.map(s=>({s,l:antiRows.filter(r=>r.s===s)})).filter(x=>x.l.length).map(x=>`<div class="sub" style="margin:10px 0 6px"><b>${ST[x.s]}</b></div><div class="scs">${Object.entries(groupBy(x.l)).map(([u,rs])=>crBlock(u,rs,true)).join('')}</div>`).join('')+
+ `<div class="sub" style="margin:10px 0 0">Todas as solicitações do Antifoliculite ficam aqui no topo, em qualquer status e canal, e não se repetem nas abas abaixo.</div></div></div>`;
+$('aftog').onclick=()=>{const b=$('afbody'),h=b.style.display==='none';b.style.display=h?'':'none';$('aftog').textContent=h?'Recolher':'Expandir'};
+const nota={sol:'Solicitações vindas de convite (sem contar o Antifoliculite, que está no topo). Em Enviadas e Concluídas o TikTok não mostra o canal, por isso aparece “canal não informado”.',org:'Pedidos que não vieram de convite: colaboração aberta e campanha de parceiro (gerenciada por S4vvy). O Antifoliculite fica no topo.'};
+function pane(list,k){return `<div class="sub" style="margin:10px 0 4px">${nota[k]}</div>`+STORD.map(s=>{const l=list.filter(r=>r.s===s);return l.length?section(s,l,s==='A'?'Aguardam decisão no TikTok (Aprovar ou Rejeitar). O prazo restante é o que o TikTok mostra.':''):''}).join('')}
+$('pane-sol').innerHTML=pane(conv,'sol');$('pane-org').innerHTML=pane(org,'org');
+
+// ===== MENSAGENS (editáveis) =====
+const MSG_ANTI=`Oi, [NOME]! 💗 Aqui é da AIAMI Asian Beauty Care.
+
+Sua amostra da Solução Antifoliculite e Pelos Encravados 100ml já foi enviada! Assim que chegar, a gente adoraria ver seu vídeo no ar.
+
+💰 COMISSÃO
+• Padrão: 12,5% sobre as vendas pelo seu link na TikTok Shop
+• 15% para quem postar 3 vídeos ou mais nos 7 primeiros dias depois de receber a amostra
+
+✅ O QUE FAZER
+• Prenda nos 3 primeiros segundos: mostre o produto ou o benefício logo de cara
+• Fale com naturalidade, como se estivesse indicando para um amigo
+• Mostre a embalagem e o produto em uso (textura, aplicação)
+• Conte sua experiência real, do seu jeito
+• Cite que é um produto difícil de encontrar no mercado, com Ácido Salicílico + Óleo de Camélia-Japonesa
+• Adicione o produto na vitrine/link da TikTok Shop no vídeo
+
+🚫 O QUE EVITAR
+• Promessas milagrosas ("cura", "resultado garantido", "em 1 dia")
+• Afirmações médicas ou de tratamento de doenças
+• Comparar ou criticar outras marcas
+• Esconder a embalagem do produto
+
+🎬 Referência de vídeo: [LINK DO VÍDEO REFERÊNCIA]
+(só para inspirar o estilo, não precisa copiar!)
+
+Qualquer dúvida, é só chamar por aqui. Obrigada pela parceria! ✨`;
+const MSGS=[
+ {k:'anti',pre:'aiami_af_',title:'★ Lançamento Antifoliculite',sub:'Para quem pediu amostra da Solução Antifoliculite e Pelos Encravados. Texto-base com a regra dos 15% (3 vídeos em 7 dias). É um rascunho para a equipe da AIAMI revisar e customizar.',def:MSG_ANTI,rc:r=>r.p===ANTI,sel:'P'},
+ {k:'geral',pre:'aiami_',title:'Convite geral · primeiras levas',sub:'Para quem pediu amostra pelos convites das levas Inauguração, Primeiros Afiliados e Leva2 a Leva5 (produtos de skincare, cílios e sobrancelhas). Não inclui o Antifoliculite.',def:MSG_PADRAO,rc:r=>r.p!==ANTI&&(r.c==='d'||r.c==='?'),sel:'P'}];
+const SELS={P:['P'],E:['E'],PEC:['P','E','C']};
+function msgPanel(m){const k=m.k;return `<div class="mp" id="mp_${k}"><h3>${m.title}</h3><div class="sub" style="margin:0 0 10px">${m.sub}</div>
+<div class="sub" style="margin:0 0 6px"><b>[NOME]</b> vira o @ de cada creator e <b>[LINK DO VÍDEO REFERÊNCIA]</b> vira o link abaixo. O texto é editável.</div>
+<textarea id="${k}_txt" spellcheck="true"></textarea><div class="cnt" id="${k}_cnt"></div>
+<label class="l" for="${k}_vid">Link do vídeo de referência</label><input type="text" id="${k}_vid" placeholder="Cole aqui o link do vídeo (ainda não definido)">
+<div class="chk"><input type="checkbox" id="${k}_c1"><label for="${k}_c1" style="margin:0">Link do vídeo de referência definido</label></div>
+<div class="chk"><input type="checkbox" id="${k}_c2"><label for="${k}_c2" style="margin:0">Do's &amp; don'ts confirmados com a equipe da AIAMI</label></div>
+<label class="l" for="${k}_sel">Quem vai receber</label><div class="row"><select id="${k}_sel"><option value="P">Aprovadas, prontas para envio</option><option value="E">Amostra enviada</option><option value="PEC">Prontas + enviadas + concluídas</option></select><span class="sub" id="${k}_rc" style="margin:0"></span></div>
+<div class="btns"><button class="btn" id="${k}_copy">Copiar mensagem</button><button class="btn pri" id="${k}_send" disabled>Copiar mensagem + lista de envio</button><button class="btn" id="${k}_reset">Restaurar texto padrão</button><span class="ok" id="${k}_ok"></span></div>
+<div class="note">Este painel <b>não envia</b> pelo TikTok: ele prepara a mensagem e a lista de destinatários. O botão vermelho só libera com o link preenchido e as duas confirmações marcadas. <b>As edições ficam salvas só neste navegador</b>: se a AIAMI customizar o texto, copie a versão final e guarde com a equipe.</div></div>`}
+$('pane-msg').innerHTML=`<div class="sub" style="margin:10px 0 10px">Duas mensagens, uma para cada projeto. Edite o texto direto na caixa.</div>`+MSGS.map(msgPanel).join('');
+MSGS.forEach(m=>{const k=m.k,g=id=>$(k+'_'+id);
+ const tx=g('txt'),vl=g('vid'),c1=g('c1'),c2=g('c2'),bs=g('send'),sl=g('sel');
+ tx.value=LS.g(m.pre+'msg')||m.def;vl.value=LS.g(m.pre+'vid')||'';c1.checked=LS.g(m.pre+'c1')==='1';c2.checked=LS.g(m.pre+'c2')==='1';sl.value=LS.g(m.pre+'sel')||m.sel;
+ const dest=()=>[...new Set(SOLR.filter(r=>m.rc(r)&&SELS[sl.value].includes(r.s)).map(r=>r.u))];
+ const final=u=>tx.value.split('[NOME]').join('@'+u).split('[LINK DO VÍDEO REFERÊNCIA]').join(vl.value.trim());
+ const upd=()=>{g('rc').textContent=dest().length+' creators receberiam esta mensagem.';g('cnt').textContent=tx.value.length+' caracteres';bs.disabled=!(vl.value.trim()&&c1.checked&&c2.checked)};
+ const save=()=>{LS.s(m.pre+'msg',tx.value);LS.s(m.pre+'vid',vl.value);LS.s(m.pre+'c1',c1.checked?'1':'0');LS.s(m.pre+'c2',c2.checked?'1':'0');LS.s(m.pre+'sel',sl.value);upd()};
+ [tx,vl,c1,c2,sl].forEach(e=>{e.addEventListener('input',save);e.addEventListener('change',save)});upd();
+ const ok=()=>{g('ok').textContent='Copiado!';setTimeout(()=>g('ok').textContent='',2500)};
+ const copia=t=>{const fb=()=>{tx.select();document.execCommand('copy');ok()};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,fb)}else fb()};
+ g('copy').onclick=()=>copia(tx.value.split('[LINK DO VÍDEO REFERÊNCIA]').join(vl.value.trim()||'[LINK DO VÍDEO REFERÊNCIA]'));
+ bs.onclick=()=>copia('MENSAGEM (use @ de cada creator no lugar de [NOME]):\n\n'+final('[NOME]').split('@[NOME]').join('[NOME]')+'\n\nDESTINATÁRIOS ('+dest().length+'):\n'+dest().map(u=>'@'+u).join('\n'));
+ g('reset').onclick=()=>{if(confirm('Voltar ao texto padrão? As edições deste texto serão perdidas.')){tx.value=m.def;save()}};
+});
+
+// ===== NAVEGAÇÃO, BUSCA, FILTROS, EXPANDIR =====
+const TABS=[['sol','Solicitações · convites ('+conv.length+')'],['org','Pedido orgânico ('+org.length+')'],['msg','Mensagens'],['conv','Convites por leva e aceites']];
+let cur='sol',stf='all';
+function visiblePane(){return $('pane-'+cur)}
+function renderPills(){const l=cur==='sol'?conv:org;$('pills').innerHTML=[['all','Todas',l.length]].concat(STORD.map(s=>[s,STS[s].replace('/expirada',''),cS(s,l)]).filter(x=>x[2])).map(x=>`<button data-s="${x[0]}" class="${stf===x[0]?'on':''}">${x[1]} (${x[2]})</button>`).join('');
+ [...document.querySelectorAll('#pills button')].forEach(b=>b.onclick=()=>{stf=b.dataset.s;renderPills();applyFilter()})}
+function applyFilter(){if(cur!=='sol'&&cur!=='org')return;const q=$('q').value.trim().toLowerCase();let vis=0,tot=0;
+ visiblePane().querySelectorAll('.sect').forEach(sec=>{const stOk=stf==='all'||sec.dataset.st===stf;let n=0;sec.querySelectorAll('.sc').forEach(c=>{const ok=stOk&&(!q||c.dataset.h.includes(q));c.classList.toggle('hide',!ok);if(ok)n++;tot++});sec.classList.toggle('hide',n===0);if(n){vis+=n;if(q)sec.classList.remove('shut')}});
+ $('shown').textContent=(q||stf!=='all')?`Mostrando ${vis} de ${tot} creators nesta aba.`:`${tot} creators nesta aba. Clique no card para ver os detalhes.`}
+function showTab(k){cur=k;TABS.forEach(([id])=>{$('pane-'+id).style.display=id===k?'':'none'});[...document.querySelectorAll('#tabs button')].forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+ const lst=k==='sol'||k==='org';$('toolbar').style.display=lst?'':'none';if(lst){stf='all';renderPills();applyFilter()}try{history.replaceState(null,'','#'+k)}catch(e){}}
 $('tabs').innerHTML=TABS.map(([k,t])=>`<button data-k="${k}">${t}</button>`).join('');
-[...document.querySelectorAll('#tabs button')].forEach(b=>b.onclick=()=>showTab(b.dataset.k));
-showTab('sol');
-$('totsol').textContent=`Solicitações de amostra no TikTok: ${SOLR.length} (${cntS(SOLR)}) · ${new Set(SOLR.map(r=>r.u)).size} creators.`;
+[...document.querySelectorAll('#tabs button')].forEach(b=>b.onclick=()=>{showTab(b.dataset.k);window.scrollTo({top:Math.max(0,$('navbar').offsetTop-4),behavior:'smooth'})});
+$('q').addEventListener('input',applyFilter);
+$('bexp').onclick=()=>visiblePane().querySelectorAll('.sc:not(.hide)').forEach(c=>{c.classList.add('open');c.querySelector('.sh').setAttribute('aria-expanded','true')});
+$('bcol').onclick=()=>visiblePane().querySelectorAll('.sc').forEach(c=>{c.classList.remove('open');c.querySelector('.sh').setAttribute('aria-expanded','false')});
+document.addEventListener('click',e=>{const h=e.target.closest('.sc>.sh');if(h&&!e.target.closest('a')){const c=h.parentElement;c.classList.toggle('open');h.setAttribute('aria-expanded',c.classList.contains('open'));return}
+ const g=e.target.closest('.sect>.gh');if(g)g.parentElement.classList.toggle('shut')});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('sh')){e.preventDefault();e.target.click()}});
+showTab((location.hash||'').slice(1)&&TABS.some(t=>t[0]===location.hash.slice(1))?location.hash.slice(1):'sol');
 </script></body></html>
