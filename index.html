@@ -93,6 +93,7 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 .rq2 dt{font-size:10.5px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.03em}.rq2 dd{margin:2px 0 0;font-size:12.5px;font-weight:700}
 .cd-ft{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 .cd-ft a{font:700 12px Montserrat,system-ui,sans-serif;color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:8px 13px;text-decoration:none;background:#fff}
+.cd-pr{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 12px}.pr{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;border:1px solid var(--line);background:#f6f6f6;border-radius:8px;padding:5px 9px;color:var(--ink)}.pr:before{content:"";width:8px;height:8px;border-radius:2px;background:var(--ink);opacity:.35}.pr.anti{background:#fff1f3;border-color:#ffc2cc}.pr.anti:before{background:#e0245e;opacity:1}
 .mp textarea,.mp input[type=text],.mp select{background:#fff!important;color:#111!important}
 @media(max-width:700px){.cd-body{grid-template-columns:1fr}.cd-tg{padding:8px 10px}}
 @media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
@@ -232,6 +233,7 @@ const LS={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){
 // ===== SOLICITAÇÕES DE AMOSTRA (dados coletados da aba "Solicitações de amostra" do TikTok Shop) =====
 const SOLR=SOLD.SOL.map(a=>({u:a[0],s:a[1],p:a[2],c:a[3],cm:a[4],t:a[5],g:a[6],ap:a[7]}));
 const NPN=SOLD.PN,CRD=SOLD.CR,ANTI=8;
+const ABR=['Kit Sérum Cílios + Antifrizz','Sérum Prohairin 8ml','Antifrizz 8ml','Gel Fixador Sobrancelhas','Sabonete Cílios','Sabonete Antiacne','Kit Brow Lamination + Sérum','Kit 2 Séruns + Gel','Antifoliculite 100ml','Creme Hidratante 180g','Kit 3x Antifrizz'];
 const num=s=>{if(!s||s==='-')return 0;const m=s.replace(/[R$\s.]/g,'').replace(',','.');return parseFloat(m)||0};
 const ST={A:'A analisar',P:'Pronto para envio',E:'Enviadas',C:'Concluídas',X:'Canceladas, expiradas e rejeitadas'};
 const STS={A:'A analisar',P:'Pronto p/ envio',E:'Enviada',C:'Concluída',X:'Cancelada/expirada'};
@@ -262,7 +264,7 @@ function crBlock(u,rows,open){
  const cnt={};rows.forEach(r=>cnt[r.s]=(cnt[r.s]||0)+1);
  const sum=STORD.filter(s=>cnt[s]).map(s=>`<span class="ch ${s==='A'?'ch-w':(s==='X'?'ch-no':'ch-ok')}">${cnt[s]>1?cnt[s]+'× ':''}${STS[s]}</span>`).join('')+`<span>${rows.length} ${rows.length===1?'produto':'produtos'}</span>`+(c.g&&c.g!=='-'?`<span class="g">GMV ${esc(c.g)}</span>`:'');
  const hay=(u+' '+(c.n||'')+' '+(c.c||'')+' '+rows.map(r=>NPN[r.p]).join(' ')).toLowerCase();
- return `<div class="cd${open?' open':''}" data-h="${esc(hay)}"><div class="cd-h" tabindex="0" role="button" aria-expanded="${!!open}"><div class="av">${u.replace(/^[_.]+/,'')[0].toUpperCase()}</div><div class="cd-id"><div class="cd-u">@${u}${badges}</div><div class="cd-n">${esc([c.n,c.c].filter(Boolean).join(' · '))}</div></div><button type="button" class="cd-tg"><span class="t1">Ver detalhes ▾</span><span class="t2">Recolher ▴</span></button></div><div class="cd-sum">${sum}</div><div class="cd-det"><div class="cd-body"><div class="cd-stats">${stats||'<div class="st w2"><span>Métricas</span><b>Não exibidas pelo TikTok nesta aba</b></div>'}</div><div class="cd-reqs">${rows.map(reqLine).join('')}</div></div><div class="cd-ft"><a href="https://tiktok.com/@${u}" target="_blank" rel="noopener">Abrir @${u} no TikTok ↗</a><button type="button" class="cd-tg cd-close">Recolher ▴</button></div></div></div>`}
+ return `<div class="cd${open?' open':''}" data-h="${esc(hay)}"><div class="cd-h" tabindex="0" role="button" aria-expanded="${!!open}"><div class="av">${u.replace(/^[_.]+/,'')[0].toUpperCase()}</div><div class="cd-id"><div class="cd-u">@${u}${badges}</div><div class="cd-n">${esc([c.n,c.c].filter(Boolean).join(' · '))}</div></div><button type="button" class="cd-tg"><span class="t1">Ver detalhes ▾</span><span class="t2">Recolher ▴</span></button></div><div class="cd-sum">${sum}</div><div class="cd-pr">${[...new Set(rows.map(r=>r.p))].map(i=>`<span class="pr${i===ANTI?' anti':''}">${ABR[i]}</span>`).join('')}</div><div class="cd-det"><div class="cd-body"><div class="cd-stats">${stats||'<div class="st w2"><span>Métricas</span><b>Não exibidas pelo TikTok nesta aba</b></div>'}</div><div class="cd-reqs">${rows.map(reqLine).join('')}</div></div><div class="cd-ft"><a href="https://tiktok.com/@${u}" target="_blank" rel="noopener">Abrir @${u} no TikTok ↗</a><button type="button" class="cd-tg cd-close">Recolher ▴</button></div></div></div>`}
 function groupBy(list){const m={};list.forEach(r=>{(m[r.u]=m[r.u]||[]).push(r)});return m}
 function section(st,list,note){
  const g=groupBy(list),us=Object.keys(g).sort((a,b)=>num((CRD[b]||{}).g)-num((CRD[a]||{}).g));
