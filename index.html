@@ -311,12 +311,12 @@ Sua amostra da Solução Antifoliculite e Pelos Encravados 100ml já foi enviada
 Qualquer dúvida, é só chamar por aqui. Obrigada pela parceria! ✨`;
 const MSGS=[
  {k:'anti',pre:'aiami_af_',title:'★ Lançamento Antifoliculite',sub:'Para quem pediu amostra da Solução Antifoliculite e Pelos Encravados. Texto-base com a regra dos 15% (3 vídeos em 7 dias). É um rascunho para a equipe da AIAMI revisar e customizar.',def:MSG_ANTI,rc:r=>r.p===ANTI,sel:'P'},
- {k:'geral',pre:'aiami_',title:'Convite geral · primeiras levas',sub:'Para quem pediu amostra pelos convites das levas Inauguração, Primeiros Afiliados e Leva2 a Leva5 (produtos de skincare, cílios e sobrancelhas). Não inclui o Antifoliculite.',def:MSG_PADRAO,rc:r=>r.p!==ANTI&&(r.c==='d'||r.c==='?'),sel:'P'}];
+ {k:'geral',pre:'aiami_',vid:'https://drive.google.com/file/d/1ds7J3-ACw1aOgZn1nX-EfMTTS1rS7QIM/view?usp=sharing',title:'Convite geral · primeiras levas',sub:'Para quem pediu amostra pelos convites das levas Inauguração, Primeiros Afiliados e Leva2 a Leva5 (produtos de skincare, cílios e sobrancelhas). Não inclui o Antifoliculite.',def:MSG_PADRAO,rc:r=>r.p!==ANTI&&(r.c==='d'||r.c==='?'),sel:'P'}];
 const SELS={P:['P'],E:['E'],PEC:['P','E','C']};
 function msgPanel(m){const k=m.k;return `<div class="mp" id="mp_${k}"><h3>${m.title}</h3><div class="sub" style="margin:0 0 10px">${m.sub}</div>
 <div class="sub" style="margin:0 0 6px"><b>[NOME]</b> vira o @ de cada creator e <b>[LINK DO VÍDEO REFERÊNCIA]</b> vira o link abaixo. O texto é editável.</div>
 <textarea id="${k}_txt" spellcheck="true"></textarea><div class="cnt" id="${k}_cnt"></div>
-<label class="l" for="${k}_vid">Link do vídeo de referência</label><input type="text" id="${k}_vid" placeholder="Cole aqui o link do vídeo (ainda não definido)">
+<label class="l" for="${k}_vid">Link do vídeo de referência</label><input type="text" id="${k}_vid" placeholder="Cole aqui o link do vídeo">
 <div class="chk"><input type="checkbox" id="${k}_c1"><label for="${k}_c1" style="margin:0">Link do vídeo de referência definido</label></div>
 <div class="chk"><input type="checkbox" id="${k}_c2"><label for="${k}_c2" style="margin:0">Do's &amp; don'ts confirmados com a equipe da AIAMI</label></div>
 <label class="l" for="${k}_sel">Quem vai receber</label><div class="row"><select id="${k}_sel"><option value="P">Aprovadas, prontas para envio</option><option value="E">Amostra enviada</option><option value="PEC">Prontas + enviadas + concluídas</option></select><span class="sub" id="${k}_rc" style="margin:0"></span></div>
@@ -325,7 +325,7 @@ function msgPanel(m){const k=m.k;return `<div class="mp" id="mp_${k}"><h3>${m.ti
 $('pane-msg').innerHTML=`<div class="sub" style="margin:10px 0 10px">Duas mensagens, uma para cada projeto. Edite o texto direto na caixa.</div>`+MSGS.map(msgPanel).join('');
 MSGS.forEach(m=>{const k=m.k,g=id=>$(k+'_'+id);
  const tx=g('txt'),vl=g('vid'),c1=g('c1'),c2=g('c2'),bs=g('send'),sl=g('sel');
- tx.value=LS.g(m.pre+'msg')||m.def;vl.value=LS.g(m.pre+'vid')||'';c1.checked=LS.g(m.pre+'c1')==='1';c2.checked=LS.g(m.pre+'c2')==='1';sl.value=LS.g(m.pre+'sel')||m.sel;
+ tx.value=LS.g(m.pre+'msg')||m.def;vl.value=LS.g(m.pre+'vid')||m.vid||'';c1.checked=LS.g(m.pre+'c1')==='1';c2.checked=LS.g(m.pre+'c2')==='1';sl.value=LS.g(m.pre+'sel')||m.sel;
  const dest=()=>[...new Set(SOLR.filter(r=>m.rc(r)&&SELS[sl.value].includes(r.s)).map(r=>r.u))];
  const final=u=>tx.value.split('[NOME]').join('@'+u).split('[LINK DO VÍDEO REFERÊNCIA]').join(vl.value.trim());
  const upd=()=>{g('rc').textContent=dest().length+' creators receberiam esta mensagem.';g('cnt').textContent=tx.value.length+' caracteres';bs.disabled=!(vl.value.trim()&&c1.checked&&c2.checked)};
