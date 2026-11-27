@@ -97,6 +97,10 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 .mp textarea,.mp input[type=text],.mp select{background:#fff!important;color:#111!important}
 @media(max-width:700px){.cd-body{grid-template-columns:1fr}.cd-tg{padding:8px 10px}}
 @media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
+
+.u-r{background:#ffe0e5;color:#a1001f}.u-y{background:#fff3cd;color:#7a5b00}.u-g{background:#e3f6e8;color:#14692c}.u-k{background:#eee;color:#555}
+.warn{background:#fff8e6;border:1px solid #f0d58a;border-radius:12px;padding:14px 16px;font-size:13px;line-height:1.55;margin:4px 0 8px}.warn b{font-weight:700}.warn ul{margin:6px 0 0;padding-left:18px}
+.tbl-s td small{color:var(--mut);display:block;font-size:11px}
 </style></head><body><div class="wrap">
 <h1>AIAMI · Afiliados TikTok Shop</h1>
 <div class="sub" id="upd"></div>
@@ -108,6 +112,7 @@ tr:last-child td{border-bottom:0}td.n,th.n{text-align:right}
 <div id="pane-sol"></div>
 <div id="pane-org" style="display:none"></div>
 <div id="pane-msg" style="display:none"></div>
+<div id="pane-prz" style="display:none"></div>
 <div id="pane-conv" style="display:none">
 <div class="kpis" id="kpis"></div>
 <div class="bar"><div style="display:flex;justify-content:space-between;font-size:12px"><span><b id="pn"></b> de <span id="meta"></span> aceites (meta para pausar novos convites)</span><span id="pp"></span></div><div class="track"><div class="fill" id="pf"></div></div></div>
@@ -339,8 +344,49 @@ MSGS.forEach(m=>{const k=m.k,g=id=>$(k+'_'+id);
  g('reset').onclick=()=>{if(confirm('Voltar ao texto padrão? As edições deste texto serão perdidas.')){tx.value=m.def;save()}};
 });
 
+
+// ===== PRAZOS DE ENVIO =====
+const PRZ={
+ gerado:"27/11/2026 15:10",
+ // [creator, produto, criado em (ISO -03:00), conferido no TikTok? (1=prazo lido no pedido; 0=estimado = criação + 4 dias, 23:59)]
+ ped:[
+  ["railansoares.rs","Solução Antifoliculite","2026-11-26T13:07",1],["john.sert","Solução Antifoliculite","2026-11-26T13:07",0],["lojaviral12","Solução Antifoliculite","2026-11-26T13:06",0],["fernandomultimarca","Solução Antifoliculite","2026-11-26T13:07",0],
+  ["visual_shopp","Solução Antifoliculite","2026-11-26T13:07",0],["visual_shopp","Creme 180g + Creme Corporal 200ml","2026-11-26T13:14",0],["alineteixeiraa0292","Sérum Antifrizz 8ml","2026-11-26T13:14",0],["vitrinedaaylaa","Sabonete Antiacne","2026-11-26T14:06",0],
+  ["antoniamurilolaiza","Sabonete Antiacne","2026-11-27T14:37",0],["grandejota","Solução Antifoliculite","2026-11-27T14:37",0],["vitrineisaa","Solução Antifoliculite","2026-11-27T14:38",0],["paolacarvalhotiktokshop","Gel Fixador de Sobrancelhas","2026-11-27T14:38",1],
+  ["vitrinedaaylaa","Solução Antifoliculite","2026-11-27T14:41",0],["vitrineisaa","(produto a confirmar no pedido)","2026-11-27T14:44",0]],
+ // aprovações ainda não feitas (aba A analisar): [creator, produto, prazo aproximado]
+ ana:[["dborabshop","Sérum Antifrizz 8ml","2026-11-28T15:00"],["lelesoares283","Sérum Antifrizz 8ml","2026-11-30T15:00"]],
+ // perdidos: [creator, produto(s), o que houve, situação]
+ per:[
+  ["sarahhhonorato","Prohairin, Sabonete Antiacne, Gel Fixador","Aprovada e cancelada sem envio (3 amostras)","Pedido de desculpas enviado por chat em 27/11. Já existe convite ativo (Leva2) com 3 produtos; reenvio do convite aguardando decisão."],
+  ["vitrineisaa","Gel Fixador de Sobrancelhas","Cancelada","—"],
+  ["acamilaprudente","Sérum Antifrizz, Gel Fixador","Expirada sem decisão","—"],
+  ["fkrochasp","Gel Fixador de Sobrancelhas","Expirada sem decisão","—"],
+  ["usele.cachoeiro","Gel Fixador de Sobrancelhas","Expirada sem decisão","—"],
+  ["tatianesuelenn","Gel Fixador de Sobrancelhas","Expirada sem decisão","—"]]
+};
+function przDead(c){const d=new Date(c.slice(0,10)+'T00:00:00-03:00');d.setDate(d.getDate()+4);return new Date(d.toISOString().slice(0,10)+'T23:59:59-03:00')}
+function przLeft(ms){if(ms<=0)return 'vencido';const h=Math.floor(ms/36e5),d=Math.floor(h/24);return d>=1?d+' d '+(h%24)+' h':h+' h '+Math.floor(ms%36e5/6e4)+' min'}
+function przCls(ms){return ms<=0?'u-r':ms<24*36e5?'u-r':ms<48*36e5?'u-y':'u-g'}
+const fdt=d=>d.toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+function przRows(){const now=Date.now();return PRZ.ped.map(o=>({u:o[0],p:o[1],c:new Date(o[2]+':00-03:00'),d:przDead(o[2]),v:o[3]})).sort((a,b)=>a.d-b.d||a.c-b.c).map(o=>({...o,ms:o.d-now}))}
+function przUrgent(){const n=Date.now();return przRows().filter(o=>o.ms<48*36e5).length+PRZ.ana.filter(a=>new Date(a[2]+':00-03:00')-n<48*36e5).length}
+function renderPrz(){const rows=przRows(),now=Date.now();
+ const u24=rows.filter(o=>o.ms<24*36e5).length,u48=rows.filter(o=>o.ms>=24*36e5&&o.ms<48*36e5).length;
+ const lk=u=>`<a href="https://www.tiktok.com/@${u}" target="_blank" rel="noopener">@${u}</a>`;
+ let h=`<div class="warn"><b>Aprovar e não enviar: o que sabemos</b><ul>
+ <li>Cada amostra aprovada vira um pedido de R$ 0,00 no Seller Center, com “Enviar pedido até” e data de cancelamento automático. Nos pedidos conferidos, o prazo de envio é de 4 dias após a criação (até 23:59) e o cancelamento automático acontece 8 dias após a criação.</li>
+ <li>A TikTok Shop acompanha, na pontuação da loja, a taxa de cancelamento por falha do vendedor (SFCR) e a taxa de envio atrasado (LDR), segundo guias de mercado (Shipfusion, Cahoot, ppc.land). <b>[Não verificado]</b> se os pedidos de amostra grátis entram nesse cálculo e qual o impacto no perfil da AIAMI. A confirmação está em Seller Center &gt; Saúde da conta / Desempenho de envio.</li>
+ <li>Por segurança, tratamos amostra aprovada sem envio como risco para a loja e para a relação com o creator.</li></ul></div>`;
+ h+=`<div class="kpis" style="margin-top:12px"><div class="k hl"><b>${u24}</b><span>vencem em menos de 24 h</span></div><div class="k"><b>${u48}</b><span>vencem em 24 a 48 h</span></div><div class="k"><b>${rows.length}</b><span>pedidos aguardando envio</span></div><div class="k"><b>${PRZ.ana.length}</b><span>solicitações a decidir</span></div><div class="k"><b>${PRZ.per.length}</b><span>perdidas (cancelada/expirada)</span></div></div>`;
+ h+=`<h2>Pedidos aguardando envio (do mais urgente ao menos)</h2><table class="tbl-s"><thead><tr><th>Creator</th><th>Produto</th><th>Criado</th><th>Enviar até</th><th>Tempo restante</th></tr></thead><tbody>`+rows.map(o=>`<tr><td>${lk(o.u)}</td><td>${o.p}</td><td>${fdt(o.c)}</td><td>${fdt(o.d)}${o.v?'':'<small>estimado (criação + 4 dias)</small>'}</td><td><span class="tag ${przCls(o.ms)}" style="margin:0">${przLeft(o.ms)}</span></td></tr>`).join('')+`</tbody></table>`;
+ h+=`<h2>Solicitações a decidir antes de expirar</h2><table class="tbl-s"><thead><tr><th>Creator</th><th>Produto</th><th>Expira (aprox.)</th><th>Tempo restante</th></tr></thead><tbody>`+PRZ.ana.map(a=>{const ms=new Date(a[2]+':00-03:00')-now;return `<tr><td>${lk(a[0])}</td><td>${a[1]}</td><td>${fdt(new Date(a[2]+':00-03:00'))}</td><td><span class="tag ${przCls(ms)}" style="margin:0">${przLeft(ms)}</span></td></tr>`}).join('')+`</tbody></table>`;
+ h+=`<h2>Perdidos e para retomar</h2><table class="tbl-s"><thead><tr><th>Creator</th><th>Produto(s)</th><th>O que houve</th><th>Situação</th></tr></thead><tbody>`+PRZ.per.map(p=>`<tr><td>${lk(p[0])}</td><td>${p[1]}</td><td>${p[2]}</td><td>${p[3]}</td></tr>`).join('')+`</tbody></table>`;
+ h+=`<div class="foot">Atualizado em ${PRZ.gerado}. O tempo restante é calculado na hora em que você abre a página. “Enviar até” foi lido direto do pedido em 2 casos; nos demais é estimativa pela mesma regra e deve ser conferida no Seller Center &gt; Gerenciar pedidos.</div>`;
+ $('pane-prz').innerHTML=h}
+
 // ===== NAVEGAÇÃO, BUSCA, FILTROS, EXPANDIR =====
-const TABS=[['sol','Solicitações · convites ('+conv.length+')'],['org','Pedido orgânico ('+org.length+')'],['msg','Mensagens'],['conv','Convites por leva e aceites']];
+const TABS=[['sol','Solicitações · convites ('+conv.length+')'],['prz','⏱ Prazos de envio ('+przUrgent()+' urgentes)'],['org','Pedido orgânico ('+org.length+')'],['msg','Mensagens'],['conv','Convites por leva e aceites']];
 let cur='sol',stf='all';
 function visiblePane(){return $('pane-'+cur)}
 function renderPills(){const l=cur==='sol'?conv:org;$('pills').innerHTML=[['all','Todas',l.length]].concat(STORD.map(s=>[s,STS[s].replace('/expirada',''),cS(s,l)]).filter(x=>x[2])).map(x=>`<button data-s="${x[0]}" class="${stf===x[0]?'on':''}">${x[1]} (${x[2]})</button>`).join('');
@@ -358,5 +404,5 @@ $('bcol').onclick=()=>visiblePane().querySelectorAll('.cd').forEach(c=>{c.classL
 document.addEventListener('click',e=>{const cl=e.target.closest('.cd-close');const h=cl?cl.closest('.cd').querySelector('.cd-h'):e.target.closest('.cd-h');if(h&&!(e.target.closest('a'))){const c=h.parentElement;c.classList.toggle('open');h.setAttribute('aria-expanded',c.classList.contains('open'));if(cl)c.scrollIntoView({block:'nearest',behavior:'smooth'});return}
  const g=e.target.closest('.sect>.gh');if(g)g.parentElement.classList.toggle('shut')});
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('cd-h')){e.preventDefault();e.target.click()}});
-showTab((location.hash||'').slice(1)&&TABS.some(t=>t[0]===location.hash.slice(1))?location.hash.slice(1):'sol');
+renderPrz();showTab((location.hash||'').slice(1)&&TABS.some(t=>t[0]===location.hash.slice(1))?location.hash.slice(1):'sol');
 </script></body></html>
